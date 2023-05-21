@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { AuthResponse, signIn, singUp } from "../components/actions/getAuth";
+import { AuthResponse, signIn, singUp } from "../actions/getAuth";
 
 export type UserRole = "CUSTOMER" | "CHEF" | "ADMIN";
 

@@ -1,3 +1,4 @@
+"use client";
 import useMenuItemEditModal from "@/app/hooks/useMenuEditModal";
 import { MenuItem } from "@/types/MenuItem";
 import { useRouter } from "next/navigation";
@@ -5,12 +6,10 @@ import { FC } from "react";
 import MenuItemTableRow from "./components/MenuItemTableRow";
 
 interface MenuManagementClientProps {
-    menuItems: MenuItem[]
+    menuItems: MenuItem[];
 }
 
-const MenuManagementClient: FC<MenuManagementClientProps> = ({
-    menuItems
-}) => {
+const MenuManagementClient: FC<MenuManagementClientProps> = ({ menuItems }) => {
     const menuModal = useMenuItemEditModal();
     const router = useRouter();
     const header = ["Name", "Description", "Categories", "Actions"];

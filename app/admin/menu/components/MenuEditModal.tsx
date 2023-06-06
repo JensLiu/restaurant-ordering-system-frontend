@@ -1,7 +1,7 @@
 "use client";
 import ImageUpload from "@/app/components/ImageUpload";
 import React, { FC, useEffect, useState } from "react";
-import { Button, Checkbox, Modal } from "react-daisyui";
+import { Button, Modal } from "react-daisyui";
 import {
     MenuItemFormValues,
     menuItemFormDefaultValues,

@@ -5,6 +5,7 @@ interface MenuItemCardProps {
     name: string;
     price: number;
     imageSrc: string;
+    description?: string;
     onClick: () => void;
 }
 
@@ -13,10 +14,11 @@ const MenuItemCard: FC<MenuItemCardProps> = ({
     name,
     price,
     imageSrc,
+    description,
     onClick,
 }) => {
     return (
-        <div className="max-w-sm mx-auto min-w-full min-h-full">
+        <div onClick={onClick} className="max-w-sm mx-auto min-w-full min-h-full hover:cursor-pointer">
             <div className="card-normal shadow-lg rounded-md">
                 <img
                     src={imageSrc}
@@ -25,10 +27,11 @@ const MenuItemCard: FC<MenuItemCardProps> = ({
                 />
                 <div className="card-body">
                     <h3 className="card-title">{name}</h3>
+                    <p className="card-text">{description}</p>
                     <p className="card-text">from ${price}</p>
-                    <button className="btn btn-primary" onClick={onClick}>
+                    {/* <button className="btn btn-primary" onClick={onClick}>
                         Add to Cart
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </div>

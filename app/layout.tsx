@@ -27,7 +27,7 @@ export default function RootLayout({
                     <AuthForm />
                 </ClientOnly>
 
-                <div className="min-h-full">{children}</div>
+                <div className="min-h-screen">{children}</div>
 
                 <Footer />
             </body>

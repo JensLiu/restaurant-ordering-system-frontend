@@ -3,13 +3,13 @@ import toast from "react-hot-toast";
 import Avatar from "../Avatar";
 import MenuItem from "./MenuItem";
 import useAuthForm from "@/app/hooks/useAuthForm";
-import useUserState from "@/app/hooks/useUserState";
+import useUserStore from "@/app/hooks/useUserStore";
 import { useRouter } from "next/navigation";
 
 const UserMenu = () => {
     const authForm = useAuthForm();
     const router = useRouter();     // router from the old package, trying to solve this
-    const { email, imageSrc, signOut } = useUserState((state) => ({
+    const { email, imageSrc, signOut } = useUserStore((state) => ({
         email: state.email,
         imageSrc: state.imageSrc,
         signOut: state.signOut,

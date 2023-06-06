@@ -1,13 +1,10 @@
-"use client";
+import ClientOnly from "./components/ClientOnly";
 
-import useUserState from "./hooks/useUserState";
 
-export default function Home() {
-    const userState = useUserState();
+export default async function Home() {
 
     return (
-        <div className="container mx-auto my-auto">
-            Hello {userState.firstname}{" "}
-        </div>
+        <ClientOnly>
+        </ClientOnly>
     );
 }

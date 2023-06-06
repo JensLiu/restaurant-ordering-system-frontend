@@ -1,7 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyAuth } from "./app/lib/auth";
+import useUserState from "./app/hooks/useUserStore";
+
 
 export async function middleware(req: NextRequest) {
+
+    // const userState = useUserState();
+    // console.log(userState);
+
     // const token = req.cookies.get("access-token")?.value;
 
     // const verifiedToken =

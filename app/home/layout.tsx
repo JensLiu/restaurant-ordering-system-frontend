@@ -1,12 +1,12 @@
 import ClientOnly from "../components/ClientOnly";
 
-export default function UserProfileLayout({
+export default function HomeLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
     return (
-        <div className="bg-base-200">
+        <div>
             <ClientOnly>{children}</ClientOnly>
         </div>
     );

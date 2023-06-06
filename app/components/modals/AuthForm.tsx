@@ -1,19 +1,20 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import useLoginModal from "@/app/hooks/useAuthForm";
+import useAuthForm from "@/app/hooks/useAuthForm";
 import { Avatar, Button, Input, Modal } from "react-daisyui";
 import { FieldValues, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import useUserState from "@/app/hooks/useUserState";
+import useUserStore from "@/app/hooks/useUserStore";
 import { useRouter } from "next/navigation";
+import useStore from "@/app/hooks/useStore";
 
 type Variant = "LOGIN" | "REGISTER";
 
 const AuthForm = () => {
-    const loginModal = useLoginModal();
+    const loginModal = useAuthForm();
     const router = useRouter();
-    const { signUp, signIn } = useUserState();
+    const userStore = useUserStore();
     const [isLoading, setIsLoading] = useState(false);
     const [variant, setVariant] = useState<Variant>("LOGIN");
 
@@ -35,7 +36,7 @@ const AuthForm = () => {
         setIsLoading(true);
 
         if (variant == "LOGIN") {
-            signIn(data.email, data.password, (success) => {
+            userStore?.signIn(data.email, data.password, (success) => {
                 if (success as boolean) {
                     toast.success("logged in");
                     handleClose();
@@ -45,7 +46,7 @@ const AuthForm = () => {
                 }
             });
         } else if (variant == "REGISTER") {
-            signUp(
+            userStore?.signUp(
                 data.email,
                 data.password,
                 data.firstname,
@@ -97,7 +98,7 @@ const AuthForm = () => {
                         <Avatar
                             shape="circle"
                             size="md"
-                            src="/images/placeholder.jpg"
+                            src="/images/avatar_placeholder.jpg"
                         />
                     </div>
                     {variant == "REGISTER" && (

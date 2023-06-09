@@ -1,6 +1,6 @@
 "use client";
 import { getUsers } from "@/app/actions/getUsers";
-import { User } from "@/types/UserDetail";
+import { User } from "@/types/UserTypes";
 import React, { useEffect, useState } from "react";
 import UserDetailTableRow from "./components/UserDetailTableRow";
 

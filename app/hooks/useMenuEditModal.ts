@@ -1,4 +1,4 @@
-import { MenuItem } from "@/types/MenuItem";
+import { MenuItem } from "@/types/MenuTypes";
 import { create } from "zustand";
 import { menuItemFormDefaultValues } from "../admin/menu/hooks/MenuItemForm";
 

@@ -1,4 +1,4 @@
-import { MenuItem } from "@/types/MenuItem";
+import { MenuItem } from "@/types/MenuTypes";
 import { useForm } from "react-hook-form";
 
 export type MenuItemFormValues = {

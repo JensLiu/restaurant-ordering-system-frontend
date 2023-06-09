@@ -1,4 +1,4 @@
-import { User } from "@/types/UserDetail";
+import { User } from "@/types/UserTypes";
 import axios, { AxiosResponse } from "axios";
 import axiosInstance from "./axios";
 import { UserState } from "../hooks/useUserStore";

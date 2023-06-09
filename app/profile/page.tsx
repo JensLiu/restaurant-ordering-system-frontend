@@ -9,7 +9,7 @@ import PreviewInput from "../components/input/PreviewInput";
 import { toast } from "react-hot-toast";
 import axiosInstance from "../actions/axios";
 import { getCurrentUser } from "../actions/getUsers";
-import { User } from "@/types/UserDetail";
+import { User } from "@/types/UserTypes";
 
 const UserProfilePage = () => {
     const userStore = useUserStore();

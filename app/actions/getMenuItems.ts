@@ -1,7 +1,8 @@
-import { MenuItem } from "@/types/MenuItem";
+import { MenuItem } from "@/types/MenuTypes";
 import axiosInstance from "./axios";
 
 export async function getMenuItems(): Promise<MenuItem[]> {
+    console.log("getMenuItems")
     const items = (await axiosInstance.get("/api/v1/menu")).data;
     return items;
 }

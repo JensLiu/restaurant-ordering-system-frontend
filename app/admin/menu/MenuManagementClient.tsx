@@ -1,6 +1,6 @@
 "use client";
 import useMenuItemEditModal from "@/app/hooks/useMenuEditModal";
-import { MenuItem } from "@/types/MenuItem";
+import { MenuItem } from "@/types/MenuTypes";
 import { useRouter } from "next/navigation";
 import { FC } from "react";
 import MenuItemTableRow from "./components/MenuItemTableRow";
@@ -40,15 +40,9 @@ const MenuManagementClient: FC<MenuManagementClientProps> = ({ menuItems }) => {
                                     key={item.id} // Add a key prop with a unique identifier
                                     id={item.id}
                                     data={item}
-                                    onDelete={() => router.refresh()}
-                                    onEdit={() => router.refresh()}
-                                    onSoldOut={() => router.refresh()}
-                                    // id={item.id}
-                                    // name={item.name}
-                                    // imageSrc={item.imageSrc}
-                                    // description={item.description}
-                                    // categories={item.categories}
-                                    // isSoldOut={item.isSoldOut}
+                                    onDelete={router.refresh}
+                                    onEdit={router.refresh}
+                                    onSoldOut={router.refresh}
                                 />
                             ))}
                         </tbody>

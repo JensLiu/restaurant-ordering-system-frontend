@@ -52,10 +52,10 @@ const MenuEditModal: FC<MenuEditModalProps> = ({ onSuccess }) => {
     const onSubmit = (data: MenuItemFormValues) => {
         axiosInstance.post("/api/v1/menu", data).then((res) => {
             console.log(res);
+            toast.success("Menu item added");
+            handleClose();
             if (onSuccess) {
                 onSuccess();
-                toast.success("Menu item added");
-                handleClose();
             }
         });
     };
@@ -65,10 +65,10 @@ const MenuEditModal: FC<MenuEditModalProps> = ({ onSuccess }) => {
             .post(`/api/v1/menu/${data.id}`, data)
             .then((res) => {
                 console.log(res);
+                toast.success("Menu item updated");
+                handleClose();
                 if (onSuccess) {
                     onSuccess();
-                    toast.success("Menu item updated");
-                    handleClose();
                 }
             });
     };

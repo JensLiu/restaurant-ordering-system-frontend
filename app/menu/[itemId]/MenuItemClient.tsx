@@ -1,5 +1,5 @@
 "use client";
-import { MenuItem } from "@/types/MenuItem";
+import { MenuItem } from "@/types/MenuTypes";
 import React, { FC } from "react";
 
 interface MenuItemClientProps {

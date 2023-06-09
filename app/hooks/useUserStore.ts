@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { signIn, singUp } from "../actions/getAuth";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { Role } from "@/types/UserDetail";
+import { Role } from "@/types/UserTypes";
 
 export type UserRole = "CUSTOMER" | "CHEF" | "ADMIN";
 

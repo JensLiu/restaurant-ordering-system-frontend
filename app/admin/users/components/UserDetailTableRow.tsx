@@ -1,4 +1,4 @@
-import { Role } from "@/types/UserDetail";
+import { Role } from "@/types/UserTypes";
 import clsx from "clsx";
 import React, { FC } from "react";
 

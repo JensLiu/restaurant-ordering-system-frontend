@@ -1,4 +1,4 @@
-import { Role } from "@/types/UserDetail";
+import { Role } from "@/types/UserTypes";
 import axios from "axios";
 import axiosInstance from "./axios";
 

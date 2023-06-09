@@ -1,6 +1,6 @@
 import axiosInstance from "@/app/actions/axios";
 import useMenuItemEditModal from "@/app/hooks/useMenuEditModal";
-import { MenuItem } from "@/types/MenuItem";
+import { MenuItem } from "@/types/MenuTypes";
 import React, { FC } from "react";
 
 interface MenuItemTableRowProps {
@@ -9,11 +9,6 @@ interface MenuItemTableRowProps {
     onEdit: () => void;
     onDelete: () => void;
     onSoldOut: () => void;
-    // name: string;
-    // imageSrc: string;
-    // description: string;
-    // isSoldOut: boolean;
-    // categories: { id: string, value: string }[];
 }
 
 const MenuItemTableRow: FC<MenuItemTableRowProps> = ({

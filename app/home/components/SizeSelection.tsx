@@ -1,11 +1,11 @@
-import { SizeAndPrice } from "@/types/MenuTypes";
+import { MenuItemSize } from "@/types/MenuTypes";
 import React, { FC } from "react";
 import Select from "react-select";
 
 interface SizeSelectionProps {
-    options: SizeAndPrice[];
-    value: SizeAndPrice | undefined;
-    onChange: (size: SizeAndPrice) => void;
+    options: MenuItemSize[];
+    value: MenuItemSize | undefined;
+    onChange: (size: MenuItemSize) => void;
 }
 
 const SizeSelection: FC<SizeSelectionProps> = ({
@@ -28,7 +28,7 @@ const SizeSelection: FC<SizeSelectionProps> = ({
             name="Select size"
             options={selectOptions}
             onChange={(value) => {
-                onChange(value as SizeAndPrice);
+                onChange(value as MenuItemSize);
             }}
         />
     );

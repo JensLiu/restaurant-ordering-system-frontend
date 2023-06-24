@@ -18,7 +18,7 @@ const MenuItemCard: FC<MenuItemCardProps> = ({
     onClick,
 }) => {
     return (
-        <div onClick={onClick} className="max-w-sm mx-auto min-w-full min-h-full hover:cursor-pointer">
+        <div onClick={onClick} className="max-w-sm mx-auto min-w-full min-h-full hover:cursor-pointer transition hover:scale-105">
             <div className="card-normal shadow-lg rounded-md">
                 <img
                     src={imageSrc}

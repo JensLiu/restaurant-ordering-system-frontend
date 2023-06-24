@@ -5,6 +5,8 @@ import Navbar from "./components/navbar/Navbar";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import Footer from "./components/Footer";
+import CartDrawer from "./components/cart/CartDrawer";
+import NotificationProvider from "./components/NotificationProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,14 +23,17 @@ export default function RootLayout({
     return (
         <html data-theme="emerald" lang="en">
             <body className={inter.className}>
-                <ClientOnly>
-                    <Toaster />
-                    <Navbar />
-                    <AuthForm />
-                </ClientOnly>
+                <div className="min-h-screen">
+                    <ClientOnly>
+                        <Toaster />
+                        <Navbar />
+                        <CartDrawer />
+                        <AuthForm />
+                        {/* <NotificationProvider /> */}
+                    </ClientOnly>
 
-                <div className="min-h-screen">{children}</div>
-
+                    <>{children}</>
+                </div>
                 <Footer />
             </body>
         </html>

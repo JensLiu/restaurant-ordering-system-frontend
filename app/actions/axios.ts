@@ -1,10 +1,12 @@
 import axios from "axios";
+import { useCurrentUser } from "../hooks/useUserProfile";
+import useUserStore from "../hooks/useUserStore";
 
 const baseUrl = "http://localhost:8080";
 
 const axiosInstance = axios.create({
     baseURL: baseUrl,
-    withCredentials: true,
+    // withCredentials: true,
 });
 
 /**
@@ -12,26 +14,44 @@ const axiosInstance = axios.create({
  * credit: porone at stackoverflow
  *
  */
-// axiosInstance.interceptors.response.use(
-//     (response) => response,
-//     (error) => {
-//         const { response, config } = error;
-//         console.log("intercepter ");
-//         console.log(error);
-//         if (response.status != 401 || response.status != 403) {
-//             return Promise.reject(error);
-//         }
-//         return axios
-//             .get("/auth/refresh", { withCredentials: true, baseURL: baseUrl })
-//             .then((res) => {
-//                 if (res.status === 200) {
-//                     return axiosInstance(config);
-//                 }
-//             })
-//             .catch((error) => {
-//                 return Promise.reject(error);
-//             });
-//     }
-// );
+const refreshToken = async () => {
+    const refreshToken = useUserStore.getState().refreshToken;
+    const response = await axios.post(
+        "http://localhost:8080/auth/refresh", {}, // placeholder for empty request body
+        {
+            headers: {
+                Authorization: `Bearer ${refreshToken}`,
+            },
+        }
+    );
+    useUserStore.setState((state) => ({
+        ...state,
+        accessToken: response.data.accessToken,
+        refreshToken: response.data.refreshToken,
+    }));
+};
+
+axiosInstance.interceptors.request.use((config) => {
+    const token = useUserStore.getState().accessToken; // use getState() in zustand, not hooks
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
+
+axiosInstance.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+        if (
+            (error.response?.status == 401 || error.response?.status == 403) &&
+            !error.config._retry
+        ) {
+            error.config._retry = true;
+            await refreshToken();
+            return axiosInstance(error.config);
+        }
+        return Promise.reject(error);
+    }
+);
 
 export default axiosInstance;

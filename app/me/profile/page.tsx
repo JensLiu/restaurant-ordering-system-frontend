@@ -1,15 +1,14 @@
 "use client";
 
-import useUserStore from "../hooks/useUserStore";
 import { AuthRequiredError } from "@/app/lib/exceptions";
 import { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import axios from "axios";
-import PreviewInput from "../components/input/PreviewInput";
 import { toast } from "react-hot-toast";
-import axiosInstance from "../actions/axios";
-import { getCurrentUser } from "../actions/getUsers";
 import { User } from "@/types/UserTypes";
+import useUserStore from "@/app/hooks/useUserStore";
+import { getCurrentUser, updateUserData } from "@/app/actions/getUsers";
+import axiosInstance from "@/app/actions/axios";
+import PreviewInput from "@/app/components/input/PreviewInput";
 
 const UserProfilePage = () => {
     const userStore = useUserStore();
@@ -28,20 +27,11 @@ const UserProfilePage = () => {
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         setIsLoading(true);
-        // axios
-        //     .post("http://localhost:8080/api/v1/users/me", data, {
-        //         withCredentials: true,
-        //         headers: {
-        //             "Access-Control-Allow-Origin": "http://localhost:8080",
-        //             "Content-type": "application/json",
-        //         },
-        //     })
-        axiosInstance
-            .post("/api/v1/users/me", data)
-            .then((res) => {
-                reset(res.data);
+        updateUserData(data)
+            .then((newData) => {
+                reset(newData);
                 toast.success("Profile updated");
-                setData(res.data);
+                setData(newData);
             })
             .catch((error) => {
                 console.log(error);

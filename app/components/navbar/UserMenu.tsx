@@ -8,9 +8,10 @@ import { useRouter } from "next/navigation";
 
 const UserMenu = () => {
     const authForm = useAuthForm();
-    const router = useRouter();     // router from the old package, trying to solve this
-    const { email, imageSrc, signOut } = useUserStore((state) => ({
+    const router = useRouter();
+    const { role, email, imageSrc, signOut } = useUserStore((state) => ({
         email: state.email,
+        role: state.role,
         imageSrc: state.imageSrc,
         signOut: state.signOut,
     }));
@@ -18,7 +19,7 @@ const UserMenu = () => {
     const handleSignout = () => {
         signOut(() => {
             toast.success("Signned out");
-            router.replace('/');
+            router.replace("/home");
         });
     };
 
@@ -34,7 +35,36 @@ const UserMenu = () => {
             >
                 {email ? (
                     <>
-                        <MenuItem label="Profile" onClick={() => {router.push('/profile')}} />
+                        {role == "ADMIN" && (
+                            <>
+                                <MenuItem
+                                    label="Users"
+                                    onClick={() => {
+                                        router.push("/admin/users");
+                                    }}
+                                />
+                                <MenuItem
+                                    label="Menu"
+                                    onClick={() => {
+                                        router.push("/admin/menu");
+                                    }}
+                                />
+                            </>
+                        )}
+                        {role == "CUSTOMER" && (
+                            <MenuItem
+                                label="Orders"
+                                onClick={() => {
+                                    router.push("/me/orders");
+                                }}
+                            />
+                        )}
+                        <MenuItem
+                            label="Profile"
+                            onClick={() => {
+                                router.push("/me/profile");
+                            }}
+                        />
                         <MenuItem label="Sign out" onClick={handleSignout} />
                     </>
                 ) : (

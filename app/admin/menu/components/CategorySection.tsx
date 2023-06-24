@@ -1,7 +1,6 @@
-import { UseFormReturn, useFieldArray } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 import { MenuItemFormValues } from "../hooks/MenuItemForm";
 import { FC, useEffect, useState } from "react";
-import { categories } from "@/app/actions/getCategories";
 import Select from "react-select";
 import axiosInstance from "@/app/actions/axios";
 

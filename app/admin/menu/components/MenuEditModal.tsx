@@ -13,15 +13,13 @@ import CategorySection from "./CategorySection";
 import useMenuItemEditModal from "@/app/hooks/useMenuEditModal";
 import axiosInstance from "@/app/actions/axios";
 import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
-interface MenuEditModalProps {
-    onSuccess?: () => void;
-}
-
-const MenuEditModal: FC<MenuEditModalProps> = ({ onSuccess }) => {
+const MenuEditModal = () => {
     const menuModal = useMenuItemEditModal();
     const form = useMenuItemForm(menuModal.initialData);
     const [editMode, setEditMode] = useState(false);
+    const router = useRouter();
 
     const {
         register,
@@ -53,10 +51,8 @@ const MenuEditModal: FC<MenuEditModalProps> = ({ onSuccess }) => {
         axiosInstance.post("/api/v1/menu", data).then((res) => {
             console.log(res);
             toast.success("Menu item added");
+            router.refresh();
             handleClose();
-            if (onSuccess) {
-                onSuccess();
-            }
         });
     };
 
@@ -66,10 +62,8 @@ const MenuEditModal: FC<MenuEditModalProps> = ({ onSuccess }) => {
             .then((res) => {
                 console.log(res);
                 toast.success("Menu item updated");
+                router.refresh();
                 handleClose();
-                if (onSuccess) {
-                    onSuccess();
-                }
             });
     };
 

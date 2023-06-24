@@ -1,11 +1,16 @@
 'use client';
-import useCart from "@/app/hooks/useCart";
+
+import useCartDrawer from "@/app/hooks/useCartDrawer";
+import useCartStore from "@/app/hooks/useCartStore";
+import useCart from "@/app/hooks/useCartStore";
 
 const CartMenu = () => {
-    const cart = useCart();
+
+    const cartDrawer = useCartDrawer();
+    const cart = useCartStore();
 
     return (
-        <div className="dropdown dropdown-end">
+        <div onClick={cartDrawer.onOpen}>
             <label tabIndex={0} className="btn btn-ghost btn-circle">
                 <div className="indicator">
                     <svg
@@ -29,7 +34,7 @@ const CartMenu = () => {
                     )}
                 </div>
             </label>
-            <div
+            {/* <div
                 tabIndex={0}
                 className="mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow"
             >
@@ -42,7 +47,7 @@ const CartMenu = () => {
                         </button>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };

@@ -12,6 +12,8 @@ export interface UserState {
     firstname: string;
     lastname: string;
     imageSrc: string;
+    accessToken: string;
+    refreshToken: string;
     isAuthenticated: boolean;
     signIn: (
         email: string,
@@ -37,6 +39,8 @@ const useUserStore = create<UserState>()(
             firstname: "",
             lastname: "",
             imageSrc: "",
+            accessToken: "",
+            refreshToken: "",
             isAuthenticated: false,
             signUp: async ( email, password, firstname, lastname, callback) => {
                 const response = await singUp({ email, password, firstname, lastname });
@@ -48,6 +52,8 @@ const useUserStore = create<UserState>()(
                         firstname: response.firstname,
                         lastname: response.lastname,
                         imageSrc: response.imageSrc,
+                        accessToken: response.accessToken,
+                        refreshToken: response.refreshToken,
                         isAuthenticated: true
                     }));
                     callback && callback(true);
@@ -65,6 +71,8 @@ const useUserStore = create<UserState>()(
                         firstname: response.firstname,
                         lastname: response.lastname,
                         imageSrc: response.imageSrc,
+                        accessToken: response.accessToken,
+                        refreshToken: response.refreshToken,
                         isAuthenticated: true
                     }));
                     callback && callback(true);
@@ -80,6 +88,8 @@ const useUserStore = create<UserState>()(
                     firstname: "",
                     lastname: "",
                     imageSrc: "",
+                    accessToken: "",
+                    refreshToken: "",
                     isAuthenticated: false
                 }));
                 callback && callback(true);

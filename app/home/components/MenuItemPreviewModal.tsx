@@ -1,17 +1,17 @@
 "use client";
-import useCart from "@/app/hooks/useCart";
+import useCart from "@/app/hooks/useCartStore";
 import useMenuItemPreviewModal from "@/app/hooks/useMenuItemPreviewModal";
 import React, { useState } from "react";
 import { Button, Modal } from "react-daisyui";
 import Stepper from "./Stepper";
 import SizeSelection from "./SizeSelection";
 import FlavourSelection from "./FlavourSelection";
-import { MenuItemFlavour, SizeAndPrice } from "@/types/MenuTypes";
+import { MenuItemFlavour, MenuItemSize } from "@/types/MenuTypes";
 
 const MenuItemPreviewModal = () => {
     const previewModal = useMenuItemPreviewModal();
     const [quantity, setQuantity] = useState(0);
-    const [selectedSize, setSelectedSize] = useState<SizeAndPrice>();
+    const [selectedSize, setSelectedSize] = useState<MenuItemSize>();
     const [selectedFlavour, setSelectedFlavour] = useState<MenuItemFlavour>();
     const item = previewModal.data;
     const cart = useCart();

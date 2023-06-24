@@ -1,5 +1,4 @@
 import { Role } from "@/types/UserTypes";
-import axios from "axios";
 import axiosInstance from "./axios";
 
 const LOGIN_API = "http://localhost:8080/auth/login";

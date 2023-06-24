@@ -4,7 +4,7 @@ export type MenuItem = {
     description: string;
     imageSrc: string;
     flavours: MenuItemFlavour[];
-    sizes: SizeAndPrice[];
+    sizes: MenuItemSize[];
     categories: MenuItemCategory[];
     isSoldOut: boolean;
 }
@@ -14,7 +14,7 @@ export type MenuItemFlavour = {
     name: string;
 }
 
-export type SizeAndPrice = {
+export type MenuItemSize = {
     id: string;
     size: string;
     price: number;

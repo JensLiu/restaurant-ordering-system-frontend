@@ -4,7 +4,6 @@ import { FC, useState } from "react";
 import useMenuItemPreviewModal from "../hooks/useMenuItemPreviewModal";
 import { MenuItem } from "@/types/MenuTypes";
 import MenuItemCard from "../components/MenuItemCard";
-import useCart from "../hooks/useCart";
 
 interface HomeClientProps {
     menuItems: MenuItem[];
@@ -12,7 +11,6 @@ interface HomeClientProps {
 
 const HomeClient: FC<HomeClientProps> = ({ menuItems }) => {
     const previewModal = useMenuItemPreviewModal();
-    const cart = useCart();
 
     const onClick = (id: string) => {
         previewModal.onOpen(menuItems.find((item) => item.id === id));
@@ -20,7 +18,9 @@ const HomeClient: FC<HomeClientProps> = ({ menuItems }) => {
 
     return (
         <div className="container mx-auto py-5">
-            {cart.items.map((item) => (<div>{JSON.stringify(item)}</div>))}
+            <h1 className="text-3xl font-bold mb-3">Our finest cuisines</h1>
+            <h1 className="text-md font-medium mb-6">Our menu at a glance</h1>
+            {/* {cart.items.map((item) => (<div>{JSON.stringify(item)}</div>))} */}
             <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-4">
                 {menuItems.map((item) => (
                     <MenuItemCard

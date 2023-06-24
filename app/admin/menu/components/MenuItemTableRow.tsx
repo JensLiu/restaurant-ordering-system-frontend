@@ -16,7 +16,7 @@ const MenuItemTableRow: FC<MenuItemTableRowProps> = ({
     data,
     onEdit,
     onDelete,
-    onSoldOut
+    onSoldOut,
 }) => {
     const menuModal = useMenuItemEditModal();
     const handleEdit = () => {
@@ -24,21 +24,17 @@ const MenuItemTableRow: FC<MenuItemTableRowProps> = ({
         onEdit();
     };
     const handleDelete = () => {
-        axiosInstance
-            .delete(`/api/v1/menu/${id}`)
-            .then((res) => onDelete());
+        axiosInstance.delete(`/api/v1/menu/${id}`).then((res) => onDelete());
     };
     const handleSoldOut = () => {
         let url;
         if (data.isSoldOut) {
             url = `/api/v1/menu/${id}/enable`;
         } else {
-            url = `/api/v1/menu/${id}/soldout`
+            url = `/api/v1/menu/${id}/soldout`;
         }
-        axiosInstance
-            .post(url)
-            .then((res) => onSoldOut());
-    }
+        axiosInstance.post(url).then((res) => onSoldOut());
+    };
     return (
         <tr>
             <td>
@@ -80,7 +76,10 @@ const MenuItemTableRow: FC<MenuItemTableRowProps> = ({
                         </button>
                     </span>
                     <span>
-                        <button onClick={handleSoldOut} className="btn btn-ghost btn-xs">
+                        <button
+                            onClick={handleSoldOut}
+                            className="btn btn-ghost btn-xs"
+                        >
                             {data.isSoldOut ? "enable" : "disable"}
                         </button>
                     </span>

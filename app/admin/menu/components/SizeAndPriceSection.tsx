@@ -54,6 +54,9 @@ const SizeAndPriceSection: FC<SizeAndPriceSectionProps> = ({ form }) => {
                             color={"primary"}
                         />
                     </label>
+                    {
+
+                    }
                     <button onClick={() => remove(index)} className="btn btn-error btn-circle">
                         <BsTrash size={16} />
                     </button>

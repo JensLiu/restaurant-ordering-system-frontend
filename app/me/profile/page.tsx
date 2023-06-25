@@ -1,13 +1,11 @@
 "use client";
 
-import { AuthRequiredError } from "@/app/lib/exceptions";
 import { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { User } from "@/types/UserTypes";
 import useUserStore from "@/app/hooks/useUserStore";
-import { getCurrentUser, updateUserData } from "@/app/actions/getUsers";
-import axiosInstance from "@/app/actions/axios";
+import { getCurrentUser, updateUserData } from "@/app/actions/users";
 import PreviewInput from "@/app/components/input/PreviewInput";
 
 const UserProfilePage = () => {
@@ -58,10 +56,6 @@ const UserProfilePage = () => {
             lastname: data?.lastname,
         },
     });
-
-    if (!userStore.isAuthenticated) {
-        throw new AuthRequiredError();
-    }
 
     let bodyContent = (
         <div className="grid grid-cols-2 gap-3 mx-5">

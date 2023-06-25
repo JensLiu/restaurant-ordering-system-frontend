@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import useMenuItemPreviewModal from "../hooks/useMenuItemPreviewModal";
 import { MenuItem } from "@/types/MenuTypes";
 import MenuItemCard from "../components/MenuItemCard";

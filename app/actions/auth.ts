@@ -1,8 +1,8 @@
 import { Role } from "@/types/UserTypes";
 import axiosInstance from "./axios";
 
-const LOGIN_API = "http://localhost:8080/auth/login";
-const SIGNUP_API = "http://localhost:8080/auth/register";
+const LOGIN_API = "/auth/login";
+const SIGNUP_API = "/auth/register";
 
 export type LoginRequest = {
     email: string;

@@ -8,7 +8,7 @@ export default function MenuManagementLayout({
 }) {
     return (
         <div>
-            <div className="min-h-screen">{children}</div>
+            <div className="min-h-full">{children}</div>
         </div>
     );
 }

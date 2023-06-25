@@ -1,8 +1,9 @@
 import { MenuItem } from "@/types/MenuTypes";
 import axiosInstance from "./axios";
 
+// use public api to fetch at server side
+
 export async function getMenuItems(): Promise<MenuItem[]> {
-    console.log("getMenuItems")
     const items = (await axiosInstance.get("/api/v1/public/menu")).data;
     return items;
 }

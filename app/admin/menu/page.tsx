@@ -1,5 +1,5 @@
 import React from "react";
-import { getMenuItems } from "@/app/actions/getMenuItems";
+import { getMenuItems } from "@/app/actions/menu";
 import MenuEditModal from "./components/MenuEditModal";
 import MenuManagementClient from "./MenuManagementClient";
 import ClientOnly from "@/app/components/ClientOnly";

@@ -15,26 +15,34 @@ const Navbar = () => {
     }
 
     const greeting = () => {
+        const currentHour = new Date().getHours();
+        let greetingPrefix = "Hello";
+        if (currentHour < 12) {
+            greetingPrefix = "Morning";
+        } else if (currentHour < 18) {
+            greetingPrefix = "Good day";
+        } else {
+            greetingPrefix = "Evening";
+        }
+
         if (user.id) {
             // user logged in
             if (user.role == "CUSTOMER") {
-                return `What's up, ${user.firstname}!`
+                return `${greetingPrefix}, ${user.firstname}!`;
             } else if (user.role == "CHEF") {
-                return `Hey, Chef ${user.lastname}!`
+                return `${greetingPrefix}, Chef ${user.lastname}!`;
             } else if (user.role == "ADMIN") {
-                return `Hey, Manager ${user.lastname}!`
+                return `${greetingPrefix}, Manager ${user.lastname}!`;
             }
-            return "Restaurant"
-        } else {
-            return "Restaurant";
         }
+        return "Restaurant";
     };
 
     return (
         <div className="navbar bg-base-100 sticky top-0 z-50 shadow-sm backdrop-filter backdrop-blur-lg bg-opacity-30">
             <div className="flex-1">
                 <a
-                    onClick={() => router.push("/home")}
+                    onClick={() => router.push("/")}
                     className="btn btn-ghost normal-case text-xl"
                 >
                     {greeting()}

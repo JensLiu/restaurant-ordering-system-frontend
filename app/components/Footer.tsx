@@ -1,8 +1,12 @@
 "use client";
 
-import { Footer as UiFooter } from "react-daisyui";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+    const pahtname = usePathname();
+    if (pahtname.includes("/admin")) {
+        return null;
+    }
     return (
         <footer className="footer footer-center p-10 bg-primary text-primary-content">
             <div>

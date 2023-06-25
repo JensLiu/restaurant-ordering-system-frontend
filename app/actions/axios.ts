@@ -1,11 +1,13 @@
 import axios from "axios";
-import { useCurrentUser } from "../hooks/useUserProfile";
 import useUserStore from "../hooks/useUserStore";
 
-const baseUrl = "http://localhost:8080";
+export const apiBaseUrl =
+    process.env.NEXT_PUBLIC_ENVIRONMENT_NAME == "production"
+        ? "https://necessary-soap-production.up.railway.app/"
+        : "http://localhost:8080";
 
 const axiosInstance = axios.create({
-    baseURL: baseUrl,
+    baseURL: apiBaseUrl,
     // withCredentials: true,
 });
 
@@ -17,13 +19,15 @@ const axiosInstance = axios.create({
 const refreshToken = async () => {
     const refreshToken = useUserStore.getState().refreshToken;
     const response = await axios.post(
-        "http://localhost:8080/auth/refresh", {}, // placeholder for empty request body
+        `${apiBaseUrl}/auth/refresh`,
+        {}, // placeholder for empty request body
         {
             headers: {
                 Authorization: `Bearer ${refreshToken}`,
             },
         }
     );
+    // set refreshed tokens
     useUserStore.setState((state) => ({
         ...state,
         accessToken: response.data.accessToken,

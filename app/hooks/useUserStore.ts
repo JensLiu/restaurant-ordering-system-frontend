@@ -1,11 +1,12 @@
 import { create } from "zustand";
-import { signIn, singUp } from "../actions/getAuth";
+import { signIn, singUp } from "../actions/auth";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { Role } from "@/types/UserTypes";
+import { deleteCookie, setCookie, setCookies } from "cookies-next";
 
 export type UserRole = "CUSTOMER" | "CHEF" | "ADMIN";
 
-export interface UserState {
+interface UserState {
     id: string;
     email: string;
     role: Role;
@@ -30,70 +31,68 @@ export interface UserState {
     signOut: (callback?: (message: any) => void) => void;
 }
 
+export const roleCookieName = "_app_role";
+
+const wrapResponseDataAsState = (data: any) => {
+    return {
+        id: data.id,
+        email: data.email,
+        role: data.role,
+        firstname: data.firstname,
+        lastname: data.lastname,
+        imageSrc: data.imageSrc,
+        accessToken: data.accessToken,
+        refreshToken: data.refreshToken,
+        isAuthenticated: true,
+    };
+};
+
+const defaultState = {
+    email: "",
+    id: "",
+    role: "CUSTOMER" as Role,
+    firstname: "",
+    lastname: "",
+    imageSrc: "",
+    accessToken: "",
+    refreshToken: "",
+    isAuthenticated: false,
+};
+
 const useUserStore = create<UserState>()(
     persist(
         (set) => ({
-            email: "",
-            id: "",
-            role: "CUSTOMER",
-            firstname: "",
-            lastname: "",
-            imageSrc: "",
-            accessToken: "",
-            refreshToken: "",
-            isAuthenticated: false,
-            signUp: async ( email, password, firstname, lastname, callback) => {
-                const response = await singUp({ email, password, firstname, lastname });
+            ...defaultState,
+            signUp: async (email, password, firstname, lastname, callback) => {
+                const response = await singUp({
+                    email,
+                    password,
+                    firstname,
+                    lastname,
+                });
                 if (response) {
-                    set(() => ({
-                        id: response.id,
-                        email: response.email,
-                        role: response.role,
-                        firstname: response.firstname,
-                        lastname: response.lastname,
-                        imageSrc: response.imageSrc,
-                        accessToken: response.accessToken,
-                        refreshToken: response.refreshToken,
-                        isAuthenticated: true
-                    }));
+                    set(wrapResponseDataAsState);
+                    setCookies(roleCookieName, response.role);
                     callback && callback(true);
                     return;
                 }
                 callback && callback(false);
             },
-            signIn: async (email, password, callback ) => {
+            signIn: async (email, password, callback) => {
                 const response = await signIn({ email, password });
                 if (response) {
-                    set(() => ({
-                        id: response.id,
-                        email: response.email,
-                        role: response.role,
-                        firstname: response.firstname,
-                        lastname: response.lastname,
-                        imageSrc: response.imageSrc,
-                        accessToken: response.accessToken,
-                        refreshToken: response.refreshToken,
-                        isAuthenticated: true
-                    }));
+                    set(wrapResponseDataAsState(response));
+                    setCookie(roleCookieName, response.role);
                     callback && callback(true);
                     return;
                 }
                 callback && callback(false);
             },
             signOut: (callback?: (message: any) => void) => {
-                set(() => ({
-                    id: "",
-                    email: "",
-                    password: "",
-                    firstname: "",
-                    lastname: "",
-                    imageSrc: "",
-                    accessToken: "",
-                    refreshToken: "",
-                    isAuthenticated: false
-                }));
+                set(() => ({ ...defaultState }));
+                deleteCookie(roleCookieName);
                 callback && callback(true);
-            }
+            },
         }),
         {
             name: "user-storage",

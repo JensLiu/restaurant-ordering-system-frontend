@@ -5,6 +5,7 @@ import React, { useEffect } from "react";
 import OrderTableRow from "./components/OrderTableRow";
 import { Order } from "@/types/OrderTypes";
 import { useWebSocketStore } from "@/app/hooks/useWebSocketStore";
+import { getOrdersForCurrentUser } from "@/app/actions/orders";
 
 const OrderClient = () => {
     const user = useUserStore();
@@ -13,10 +14,9 @@ const OrderClient = () => {
     const wsStore = useWebSocketStore();
 
     const fetchOrders = () => {
-        axiosInstance
-            .get("/api/v1/me/orders")
-            .then((res) => {
-                setOrders(res.data);
+        getOrdersForCurrentUser()
+            .then((data) => {
+                setOrders(data);
             })
             .catch((error) => {
                 console.log(error);

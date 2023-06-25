@@ -1,5 +1,5 @@
-import axiosInstance from "@/app/actions/axios";
-import { Order, OrderItem } from "@/types/OrderTypes";
+import { checkOutById } from "@/app/actions/orders";
+import { Order } from "@/types/OrderTypes";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import React, { FC } from "react";
@@ -29,14 +29,9 @@ const OrderTableRow: FC<OrderTableRowProprs> = ({ id, data }) => {
         .concat(data.items.length > displayLength ? "..." : "");
     const router = useRouter();
     const handleContinueCheckout = () => {
-        axiosInstance
-            .post(`/api/v1/checkout/${data.id}`, {
-                successUrl: "http://localhost:3000/me/orders",
-                cancelUrl: "http://localhost:3000/me/orders",
-            })
-            .then((res) => {
-                router.push(res.data.redirectUrl);
-            });
+        checkOutById(data.id).then((data) => {
+            router.push(data.redirectUrl);
+        });
     };
 
     return (
@@ -58,7 +53,7 @@ const OrderTableRow: FC<OrderTableRowProprs> = ({ id, data }) => {
                         "badge",
                         data.status == "UNPAID" && "badge-error",
                         data.status == "PREPARING" && "badge-warning",
-                        data.status == "READY" && "badge-success",
+                        data.status == "READY" && "badge-success"
                     )}
                 >
                     {data.status}

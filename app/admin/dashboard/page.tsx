@@ -5,10 +5,6 @@ import useUserStore from "../../hooks/useUserStore";
 const AdminDashboardPage = () => {
 
     const userStore = useUserStore();
-    if (userStore.role !== 'ADMIN') {
-        throw new UnauthorizedError();
-    }
-    
 
     return (
         <div>

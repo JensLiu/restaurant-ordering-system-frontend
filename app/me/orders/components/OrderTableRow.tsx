@@ -14,7 +14,7 @@ const OrderTableRow: FC<OrderTableRowProprs> = ({ id, data }) => {
     const imageGroup = (
         <div className="avatar-group -space-x-6">
             {data.items.slice(0, displayLength).map((item) => (
-                <div className="avatar">
+                <div key={item.id} className="avatar">
                     <div className="w-12">
                         <img src={item.menuItem.imageSrc} />
                     </div>

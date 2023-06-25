@@ -29,7 +29,7 @@ export default function RootLayout({
                         <Navbar />
                         <CartDrawer />
                         <AuthForm />
-                        {/* <NotificationProvider /> */}
+                        <NotificationProvider />
                     </ClientOnly>
 
                     <>{children}</>

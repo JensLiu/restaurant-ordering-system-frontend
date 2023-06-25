@@ -88,7 +88,7 @@ const UserProfilePage = () => {
             <div className="card w-96 bg-base-100 shadow-xl min-w-full">
                 <div className="card-body base-300">
                     <div className="card-title justify-between mb-2">
-                        <div>{userStore.firstname}, here's your profile</div>
+                        <div>{userStore.firstname}, here is your profile</div>
                         <div className="card-actions justify-end">
                             <button
                                 onClick={onRefresh}

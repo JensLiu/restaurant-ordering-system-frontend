@@ -38,7 +38,7 @@ const MenuEditModal = () => {
         } else {
             setEditMode(false);
         }
-    }, [menuModal.initialData]);
+    }, [menuModal.initialData, reset]);
 
     const imageSrc = watch("imageSrc");
 

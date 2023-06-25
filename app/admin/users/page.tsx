@@ -29,7 +29,7 @@ const UserManagement = () => {
                 <thead>
                     <tr>
                         {header.map((item, index) => (
-                            <th id={`${index}`}>{item}</th>
+                            <th key={index}>{item}</th>
                         ))}
                     </tr>
                 </thead>
@@ -50,7 +50,7 @@ const UserManagement = () => {
                 <tfoot>
                     <tr>
                         {header.map((item, index) => (
-                            <th id={`${index}`}>{item}</th>
+                            <th key={index}>{item}</th>
                         ))}
                     </tr>
                 </tfoot>

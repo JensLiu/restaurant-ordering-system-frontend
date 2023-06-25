@@ -1,10 +1,14 @@
 import axios from "axios";
 import useUserStore from "../hooks/useUserStore";
 
-export const apiBaseUrl =
+export const apiBaseDomainName =
     process.env.NEXT_PUBLIC_ENVIRONMENT_NAME == "production"
-        ? "https://necessary-soap-production.up.railway.app/"
-        : "http://localhost:8080";
+        ? "necessary-soap-production.up.railway.app"
+        : "localhost:8080";
+
+export const apiBaseUrl = `http${
+    process.env.NEXT_PUBLIC_ENVIRONMENT_NAME == "production" ? "s" : ""
+}://${apiBaseDomainName}`;
 
 const axiosInstance = axios.create({
     baseURL: apiBaseUrl,

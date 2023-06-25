@@ -4,6 +4,7 @@ import { FC, useEffect, useState } from "react";
 import useMenuItemPreviewModal from "../hooks/useMenuItemPreviewModal";
 import { MenuItem } from "@/types/MenuTypes";
 import MenuItemCard from "../components/MenuItemCard";
+import useUserStore from "../hooks/useUserStore";
 
 interface HomeClientProps {
     menuItems: MenuItem[];
@@ -18,6 +19,9 @@ const HomeClient: FC<HomeClientProps> = ({ menuItems }) => {
 
     return (
         <div className="container mx-auto py-5">
+            {useUserStore.getState().accessToken}
+            <br />
+            {useUserStore.getState().refreshToken}
             <h1 className="text-3xl font-bold mb-3">Our finest cuisines</h1>
             <h1 className="text-md font-medium mb-6">Our menu at a glance</h1>
             {/* {cart.items.map((item) => (<div>{JSON.stringify(item)}</div>))} */}

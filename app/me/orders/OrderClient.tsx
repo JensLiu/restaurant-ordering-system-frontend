@@ -29,7 +29,7 @@ const OrderClient = () => {
             fetchOrders();
         });
         return wsStore.removeOrderCallback(fetchOrders);
-    }, []);
+    }, [wsStore]);
 
     return (
         <div>

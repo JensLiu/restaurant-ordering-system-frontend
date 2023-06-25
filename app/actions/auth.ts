@@ -33,16 +33,12 @@ export async function singUp(
 ): Promise<AuthResponse | null> {
     try {
         const response = (
-            await axiosInstance.post(
-                SIGNUP_API,
-                {
-                    email: request.email,
-                    password: request.password,
-                    firstname: request.firstname,
-                    lastname: request.lastname,
-                },
-                { withCredentials: true }
-            )
+            await axiosInstance.post(SIGNUP_API, {
+                email: request.email,
+                password: request.password,
+                firstname: request.firstname,
+                lastname: request.lastname,
+            })
         ).data as AuthResponse;
         return response;
     } catch (error) {
@@ -60,6 +56,7 @@ export async function signIn(
                 password: request.password,
             })
         ).data as AuthResponse;
+        console.log(response);
         return response;
     } catch (error) {
         return null;

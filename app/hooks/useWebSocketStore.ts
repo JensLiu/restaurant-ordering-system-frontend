@@ -53,12 +53,20 @@ export const useWebSocketStore = create<WebSocketStore>((set, get) => ({
     },
     addOrderCallback: (callback) => {
         console.log("add order callback", callback);
-        set((state) => ({
-            callbacks: {
-                ...state.callbacks,
-                orderCallbacks: [...state.callbacks.orderCallbacks, callback],
-            },
-        }));
+
+        set((state) => {
+            if (state.callbacks.orderCallbacks.includes(callback))
+                return { ...state };
+            return {
+                callbacks: {
+                    ...state.callbacks,
+                    orderCallbacks: [
+                        ...state.callbacks.orderCallbacks,
+                        callback,
+                    ],
+                },
+            };
+        });
     },
     addMessageCallback(callback) {
         console.log("add message callback", callback);

@@ -23,13 +23,15 @@ const OrderClient = () => {
             });
     };
 
+    const orderNotificationCallback = (message: any) => {
+        fetchOrders();
+    };
+
     useEffect(() => {
         fetchOrders();
-        wsStore.addOrderCallback((message) => {
-            fetchOrders();
-        });
-        return wsStore.removeOrderCallback(fetchOrders);
-    }, [wsStore]);
+        wsStore.addOrderCallback(orderNotificationCallback);
+        return () => wsStore.removeOrderCallback(orderNotificationCallback);
+    }, [wsStore.addMessageCallback, wsStore.removeMessageCallback]);
 
     return (
         <div>

@@ -11,9 +11,9 @@ import SizeAndPriceSection from "./SizeAndPriceSection";
 import FlavourSection from "./FlavourSection";
 import CategorySection from "./CategorySection";
 import useMenuItemEditModal from "@/app/hooks/useMenuEditModal";
-import axiosInstance from "@/app/actions/axios";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { createMenuItem, updateMenuItem } from "@/app/actions/menu";
 
 const MenuEditModal = () => {
     const menuModal = useMenuItemEditModal();
@@ -48,7 +48,7 @@ const MenuEditModal = () => {
     };
 
     const onSubmit = (data: MenuItemFormValues) => {
-        axiosInstance.post("/api/v1/menu", data).then((res) => {
+        createMenuItem(data).then((res) => {
             console.log(res);
             toast.success("Menu item added");
             router.refresh();
@@ -57,14 +57,12 @@ const MenuEditModal = () => {
     };
 
     const onUpdate = (data: MenuItemFormValues) => {
-        axiosInstance
-            .post(`/api/v1/menu/${data.id}`, data)
-            .then((res) => {
-                console.log(res);
-                toast.success("Menu item updated");
-                router.refresh();
-                handleClose();
-            });
+        updateMenuItem(data).then((res) => {
+            console.log(res);
+            toast.success("Menu item updated");
+            router.refresh();
+            handleClose();
+        });
     };
 
     const formBody = (

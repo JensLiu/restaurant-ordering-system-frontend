@@ -2,23 +2,25 @@
 import useMenuItemEditModal from "@/app/hooks/useMenuEditModal";
 import { MenuItem } from "@/types/MenuTypes";
 import { useRouter } from "next/navigation";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import MenuItemTableRow from "./components/MenuItemTableRow";
 import { getMenuItems } from "@/app/actions/menu";
 
-interface MenuManagementClientProps {
-    menuItems: MenuItem[];
-}
-
-const MenuManagementClient: FC<MenuManagementClientProps> = ({ menuItems }) => {
+const MenuManagementClient = () => {
     const menuModal = useMenuItemEditModal();
     const router = useRouter();
     const header = ["Name", "Description", "Categories", "Actions"];
+    const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
 
-    // debug
+    const fetchData = () => {
+        getMenuItems().then((data) => {
+            setMenuItems(data);
+        });
+    };
+
     useEffect(() => {
-        console.log("MenuManagementClient: menuItems", menuItems);
-    }, [menuItems]);
+        fetchData();
+    }, [fetchData]);
 
     return (
         <div>

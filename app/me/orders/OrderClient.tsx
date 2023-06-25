@@ -1,5 +1,4 @@
 "use client";
-import axiosInstance from "@/app/actions/axios";
 import useUserStore from "@/app/hooks/useUserStore";
 import React, { useEffect } from "react";
 import OrderTableRow from "./components/OrderTableRow";

@@ -1,4 +1,4 @@
-import axiosInstance from "@/app/actions/axios";
+import { deleteMenuItem, enableMenuItem, selloutMenuItem } from "@/app/actions/menu";
 import useMenuItemEditModal from "@/app/hooks/useMenuEditModal";
 import { MenuItem } from "@/types/MenuTypes";
 import React, { FC } from "react";
@@ -24,16 +24,14 @@ const MenuItemTableRow: FC<MenuItemTableRowProps> = ({
         onEdit();
     };
     const handleDelete = () => {
-        axiosInstance.delete(`/api/v1/menu/${id}`).then((res) => onDelete());
+        deleteMenuItem(id).then((res) => onDelete());
     };
     const handleSoldOut = () => {
-        let url;
         if (data.isSoldOut) {
-            url = `/api/v1/menu/${id}/enable`;
+            enableMenuItem(id).then((res) => onSoldOut());
         } else {
-            url = `/api/v1/menu/${id}/soldout`;
+            selloutMenuItem(id).then((res) => onSoldOut());
         }
-        axiosInstance.post(url).then((res) => onSoldOut());
     };
     return (
         <tr>
@@ -59,10 +57,6 @@ const MenuItemTableRow: FC<MenuItemTableRowProps> = ({
             </td>
             <td>
                 {data.description}
-                {/* <br /> */}
-                {/* <span className="badge badge-ghost badge-sm">
-                    Desktop Support Technician
-                </span> */}
             </td>
             <td>{data.categories?.map((val) => val.value).join(" ")}</td>
             <th>

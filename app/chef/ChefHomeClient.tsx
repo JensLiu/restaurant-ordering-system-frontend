@@ -2,13 +2,12 @@
 import React, { useEffect, useState } from "react";
 import { Order } from "@/types/OrderTypes";
 import toast from "react-hot-toast";
-import axiosInstance from "../actions/axios";
 import WaitingOrderCard from "./components/WaitingOrderCard";
 import ProcessingOrderDetail from "./components/ProcessingOrderDetail";
 import { useWebSocketStore } from "../hooks/useWebSocketStore";
+import { getChefOrders } from "../actions/orders";
 
 const ChefHomeClient = () => {
-
     const [orderList, setOrderList] = useState<Order[]>([]);
     const [currentOrder, setCurrentOrder] = useState<Order | null>(null);
     const wsStore = useWebSocketStore();
@@ -27,8 +26,7 @@ const ChefHomeClient = () => {
     };
 
     const fetchOrders = () => {
-        axiosInstance.get("/api/v1/chef/orders").then((res) => {
-            const data = res.data as Order[];
+        getChefOrders().then((data) => {
             setOrderList(data);
         });
     };

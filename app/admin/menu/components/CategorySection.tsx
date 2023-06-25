@@ -2,7 +2,7 @@ import { UseFormReturn } from "react-hook-form";
 import { MenuItemFormValues } from "../hooks/MenuItemForm";
 import { FC, useEffect, useState } from "react";
 import Select from "react-select";
-import axiosInstance from "@/app/actions/axios";
+import { getCategories } from "@/app/actions/menu";
 
 interface CategorySectionPropsProps {
     form: UseFormReturn<MenuItemFormValues, any>;
@@ -36,9 +36,9 @@ const CategorySection: FC<CategorySectionPropsProps> = ({ form }) => {
         }));
 
     const fetchOptions = () => {
-        axiosInstance.get("/api/v1/menu/categories").then((res) => {
+        getCategories().then((data) => {
             // res.data as { id: string; value: string }[];
-            const opts = res.data.map((val: { id: string; value: string }) => ({
+            const opts = data.map((val: { id: string; value: string }) => ({
                 label: val.value,
                 value: val.value,
                 id: val.id,

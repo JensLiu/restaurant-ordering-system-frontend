@@ -4,20 +4,19 @@ import CartItem from "./CartItem";
 import useCartDrawer from "@/app/hooks/useCartDrawer";
 import { IoChevronBackOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
-import axiosInstance from "@/app/actions/axios";
 import useCartStore from "@/app/hooks/useCartStore";
+import { orderCheckout } from "@/app/actions/orders";
 
 const CartDrawer = () => {
     const cart = useCartStore();
     const cartDrawer = useCartDrawer();
-    const checkoutUrl = "http://localhost:8080/api/v1/checkout";
     const router = useRouter();
 
     const handleCheckout = () => {
         const dto = cart.getAsRequestDto();
-        axiosInstance.post(checkoutUrl, dto).then((res) => {
+        orderCheckout(dto).then((data) => {
             cart.clearCart();
-            router.replace(res.data.redirectUrl);
+            router.replace(data.redirectUrl);
         });
     };
 

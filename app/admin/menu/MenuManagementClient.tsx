@@ -2,8 +2,9 @@
 import useMenuItemEditModal from "@/app/hooks/useMenuEditModal";
 import { MenuItem } from "@/types/MenuTypes";
 import { useRouter } from "next/navigation";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import MenuItemTableRow from "./components/MenuItemTableRow";
+import { getMenuItems } from "@/app/actions/menu";
 
 interface MenuManagementClientProps {
     menuItems: MenuItem[];
@@ -13,6 +14,11 @@ const MenuManagementClient: FC<MenuManagementClientProps> = ({ menuItems }) => {
     const menuModal = useMenuItemEditModal();
     const router = useRouter();
     const header = ["Name", "Description", "Categories", "Actions"];
+
+    // debug
+    useEffect(() => {
+        console.log("MenuManagementClient: menuItems", menuItems);
+    }, [menuItems]);
 
     return (
         <div>

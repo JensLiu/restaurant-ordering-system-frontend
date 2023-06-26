@@ -1,5 +1,7 @@
 import { Role } from "@/types/UserTypes";
 import axiosInstance from "./axios";
+import toast from "react-hot-toast";
+import { AxiosError } from "axios";
 
 const LOGIN_API = "/auth/login";
 const SIGNUP_API = "/auth/register";
@@ -30,35 +32,26 @@ export type AuthResponse = TokenRefreshResponse & {
 
 export async function singUp(
     request: SignUpRequest
-): Promise<AuthResponse | null> {
+): Promise<AuthResponse | undefined> {
     try {
-        const response = (
-            await axiosInstance.post(SIGNUP_API, {
-                email: request.email,
-                password: request.password,
-                firstname: request.firstname,
-                lastname: request.lastname,
-            })
-        ).data as AuthResponse;
-        return response;
-    } catch (error) {
-        return null;
-    }
+        const response = await axiosInstance.post(SIGNUP_API, {
+            email: request.email,
+            password: request.password,
+            firstname: request.firstname,
+            lastname: request.lastname,
+        });
+        return response.data as AuthResponse;
+    } catch (error) {}
 }
 
 export async function signIn(
     request: LoginRequest
-): Promise<AuthResponse | null> {
+): Promise<AuthResponse | undefined> {
     try {
-        const response = (
-            await axiosInstance.post(LOGIN_API, {
-                email: request.email,
-                password: request.password,
-            })
-        ).data as AuthResponse;
-        console.log(response);
-        return response;
-    } catch (error) {
-        return null;
-    }
+        const response = await axiosInstance.post(LOGIN_API, {
+            email: request.email,
+            password: request.password,
+        });
+        return response.data as AuthResponse;
+    } catch (error) {}
 }

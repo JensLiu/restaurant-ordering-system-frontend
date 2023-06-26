@@ -41,8 +41,6 @@ const AuthForm = () => {
                     toast.success("logged in");
                     handleClose();
                     router.refresh();
-                } else {
-                    toast.error("Something went wrong");
                 }
             });
         } else if (variant == "REGISTER") {
@@ -56,8 +54,6 @@ const AuthForm = () => {
                         toast.success("signed up");
                         handleClose();
                         router.refresh();
-                    } else {
-                        toast.error("Something went wrong");
                     }
                 }
             );

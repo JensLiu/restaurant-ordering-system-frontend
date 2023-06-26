@@ -7,7 +7,7 @@ export const checkOutById = async (
     return (
         await axiosInstance.post(`/api/v1/checkout/${id}`, {
             successUrl: `https://ordering.jensdevelops.de/me/orders`,
-            cancelUrl: `https://ordering.jensdevelopsde/me/orders`,
+            cancelUrl: `https://ordering.jensdevelops.de/me/orders`,
         })
     ).data;
 };

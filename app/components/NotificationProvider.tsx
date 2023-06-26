@@ -11,7 +11,8 @@ interface NotificationProviderProps {
 
 export function showNotification(provider: () => Notification) {
     if (!("Notification" in window)) {
-        alert("This browser does not support system notifications!");
+        alert(provider().body)
+        // alert("This browser does not support system notifications!");
     } else if (Notification.permission === "granted") {
         provider();
     } else if (Notification.permission !== "denied") {

@@ -5,8 +5,7 @@ import axios, { AxiosResponse } from "axios";
 
 // use public api to fetch at server side
 export const getMenuItems = async (): Promise<MenuItem[]> => {
-    const items = (await axiosPublicInstance.get("/api/v1/public/menu")).data;
-    return items;
+    return (await axiosPublicInstance.get("/api/v1/public/menu")).data;
 };
 
 export const getMenuItem = async (id: string): Promise<MenuItem> => {

@@ -25,12 +25,12 @@ export const useWebSocketStore = create<WebSocketStore>((set, get) => ({
     },
     setSocket: (socket: WebSocket) => {
         socket.onopen = () => {
-            console.log("socket opened");
+            // console.log("socket opened");
         };
         // set onmessage callback
         socket.onmessage = (message) => {
             const data = JSON.parse(message.data);
-            console.log(data);
+            // console.log(data);
             const callbacks = get().callbacks;
             if (data.type == "ORDER") {
                 callbacks.orderCallbacks.forEach((cb) => cb(data));
@@ -52,7 +52,7 @@ export const useWebSocketStore = create<WebSocketStore>((set, get) => ({
         get().socket?.send(JSON.stringify(message));
     },
     addOrderCallback: (callback) => {
-        console.log("add order callback", callback);
+        // console.log("add order callback", callback);
 
         set((state) => {
             if (state.callbacks.orderCallbacks.includes(callback))
@@ -69,18 +69,18 @@ export const useWebSocketStore = create<WebSocketStore>((set, get) => ({
         });
     },
     addMessageCallback(callback) {
-        console.log("add message callback", callback);
+        // console.log("add message callback", callback);
         set((state) => ({
             callbacks: {
                 ...state.callbacks,
                 messageCallback: [...state.callbacks.messageCallback, callback],
             },
         }));
-        console.log("current callbacks", get().callbacks);
+        // console.log("current callbacks", get().callbacks);
     },
     removeMessageCallback(callback) {
-        console.log("remove message callback", callback);
-        console.log("previous callbacks", get().callbacks);
+        // console.log("remove message callback", callback);
+        // console.log("previous callbacks", get().callbacks);
         set((state) => ({
             callbacks: {
                 ...state.callbacks,
@@ -89,11 +89,11 @@ export const useWebSocketStore = create<WebSocketStore>((set, get) => ({
                 ),
             },
         }));
-        console.log("current callbacks", get().callbacks);
+        // console.log("current callbacks", get().callbacks);
     },
     removeOrderCallback(callback) {
-        console.log("remove order callback", callback);
-        console.log("previous callbacks", get().callbacks);
+        // console.log("remove order callback", callback);
+        // console.log("previous callbacks", get().callbacks);
         set((state) => ({
             callbacks: {
                 ...state.callbacks,
@@ -102,6 +102,6 @@ export const useWebSocketStore = create<WebSocketStore>((set, get) => ({
                 ),
             },
         }));
-        console.log("current callbacks", get().callbacks);
+        // console.log("current callbacks", get().callbacks);
     },
 }));

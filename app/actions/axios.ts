@@ -3,7 +3,7 @@ import useUserStore from "../hooks/useUserStore";
 
 export const apiBaseDomainName =
     process.env.NEXT_PUBLIC_ENVIRONMENT_NAME == "production"
-        ? "ordering-api.jensdevelops.de"
+        ? "necessary-soap-production.up.railway.app"
         : "localhost:8080";
 
 export const apiBaseUrl = `http${

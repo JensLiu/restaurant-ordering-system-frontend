@@ -14,6 +14,10 @@ const axiosInstance = axios.create({
     baseURL: apiBaseUrl,
 });
 
+export const axiosPublicInstance = axios.create({
+    baseURL: apiBaseUrl,
+})
+
 /**
  * Add a request interceptor to handle the refresh token
  * credit: porone at stackoverflow

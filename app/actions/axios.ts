@@ -3,7 +3,7 @@ import useUserStore from "../hooks/useUserStore";
 
 export const apiBaseDomainName =
     process.env.NEXT_PUBLIC_ENVIRONMENT_NAME == "production"
-        ? "necessary-soap-production.up.railway.app"
+        ? "ordering-api.jensdevelops.de"
         : "localhost:8080";
 
 export const apiBaseUrl = `http${
@@ -12,7 +12,6 @@ export const apiBaseUrl = `http${
 
 const axiosInstance = axios.create({
     baseURL: apiBaseUrl,
-    // withCredentials: true,
 });
 
 /**
@@ -54,6 +53,7 @@ axiosInstance.interceptors.response.use(
             (error.response?.status == 401 || error.response?.status == 403) &&
             !error.config._retry
         ) {
+            console.log("refreshing token")
             error.config._retry = true;
             await refreshToken();
             return axiosInstance(error.config);

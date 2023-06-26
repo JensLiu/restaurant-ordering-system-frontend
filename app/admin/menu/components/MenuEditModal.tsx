@@ -74,7 +74,7 @@ const MenuEditModal = () => {
                 value={imageSrc}
             />
             <label className="input-group">
-                <span>Name</span>
+                <span>name</span>
                 <input
                     type="text"
                     placeholder=""

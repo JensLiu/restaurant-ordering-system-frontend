@@ -6,21 +6,20 @@ import { FC, useEffect, useState } from "react";
 import MenuItemTableRow from "./components/MenuItemTableRow";
 import { getMenuItems } from "@/app/actions/menu";
 
-const MenuManagementClient = () => {
+interface MenuManagementClientProps {
+    menuItems: MenuItem[];
+}
+
+const MenuManagementClient: FC<MenuManagementClientProps> = ({ menuItems }) => {
     const menuModal = useMenuItemEditModal();
     const router = useRouter();
     const header = ["Name", "Description", "Categories", "Actions"];
-    const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
 
-    const fetchData = () => {
-        getMenuItems().then((data) => {
-            setMenuItems(data);
-        });
+    console.log("menuItems", menuItems);
+
+    const refreshData = () => {
+        router.refresh();
     };
-
-    useEffect(() => {
-        fetchData();
-    }, [fetchData]);
 
     return (
         <div>

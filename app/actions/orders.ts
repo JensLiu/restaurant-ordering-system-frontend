@@ -6,8 +6,8 @@ export const checkOutById = async (
 ): Promise<{ redirectUrl: string }> => {
     return (
         await axiosInstance.post(`/api/v1/checkout/${id}`, {
-            successUrl: `${apiBaseUrl}/me/orders`,
-            cancelUrl: `${apiBaseUrl}/me/orders`,
+            successUrl: `https://ordering.jensdevelops.de/me/orders`,
+            cancelUrl: `https://ordering.jensdevelopsde/me/orders`,
         })
     ).data;
 };

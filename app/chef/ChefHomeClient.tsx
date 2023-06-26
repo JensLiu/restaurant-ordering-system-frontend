@@ -18,10 +18,9 @@ const ChefHomeClient = () => {
         return () => {
             wsStore.removeOrderCallback(onOrderNotification);
         };
-    }, [wsStore]);
+    }, [wsStore.addOrderCallback, wsStore.removeMessageCallback]);
 
     const onOrderNotification = (message: any) => {
-        toast.success("A new order has been placed");
         fetchOrders();
     };
 

@@ -1,12 +1,16 @@
-import React from "react";
+import React, { use } from "react";
 import { getMenuItems } from "../actions/menu";
 import ClientOnly from "../components/ClientOnly";
 import HomeClient from "./HomeClient";
 import MenuItemPreviewModal from "./components/MenuItemPreviewModal";
 
-const HomePage = async () => {
+const getData = async () => {
+    return await getMenuItems();
+}
 
-    const menuItems = await getMenuItems();
+const HomePage = () => {
+
+    const menuItems = use(getMenuItems());
 
     return (
         <ClientOnly>

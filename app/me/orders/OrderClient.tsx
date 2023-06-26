@@ -1,5 +1,4 @@
 "use client";
-import useUserStore from "@/app/hooks/useUserStore";
 import React, { useEffect } from "react";
 import OrderTableRow from "./components/OrderTableRow";
 import { Order } from "@/types/OrderTypes";
@@ -7,7 +6,6 @@ import { useWebSocketStore } from "@/app/hooks/useWebSocketStore";
 import { getOrdersForCurrentUser } from "@/app/actions/orders";
 
 const OrderClient = () => {
-    const user = useUserStore();
     const header = ["Id", "Overview", "Status", "Created At", "Actions"];
     const [orders, setOrders] = React.useState<Order[]>([]);
     const wsStore = useWebSocketStore();

@@ -9,27 +9,66 @@ interface NotificationProviderProps {
     children?: React.ReactNode;
 }
 
+export function showNotification(provider: () => Notification) {
+    if (!("Notification" in window)) {
+        alert("This browser does not support system notifications!");
+    } else if (Notification.permission === "granted") {
+        provider();
+    } else if (Notification.permission !== "denied") {
+        Notification.requestPermission((permission) => {
+            if (permission === "granted") {
+                provider();
+            }
+        });
+    }
+}
+
+const orderCallback = (message: any) => {
+    const user = useUserStore.getState();
+    if (user.role == "CUSTOMER") {
+        if (message.orderStatus == "PREPARING") {
+            toast.success("Your order is being prepared");
+            showNotification(() => new Notification("Order is being prepared"));
+        } else if (message.orderStatus == "READY") {
+            toast.success("Your order is ready for pickup");
+            showNotification(() => new Notification("Order is ready"));
+        }
+    } else if (user.role == "CHEF") {
+        if (message.orderStatus === "WAITING") {
+            toast.success("New order is waiting for you");
+            showNotification(() => new Notification("New order"));
+        }
+    }
+};
+
+const messageCallback = (message: any) => {
+    toast.success("You have a new message");
+    showNotification(() => new Notification("New message"));
+};
+
 const NotificationProvider: FC<NotificationProviderProps> = ({ children }) => {
-    const userStore = useUserStore();
+    const user = useUserStore.getState();
     const wsStore = useWebSocketStore();
     useEffect(() => {
-        if (userStore.accessToken === "") {
-            console.log("no access token, no websocket");
+        if (user.accessToken === "") {
+            // console.log("no access token, no websocket");
             return;
         }
-        console.log(
-            "access token changes, restablish websocket",
-            userStore.accessToken
-        );
-        wsStore.setSocket(getWebsocket(userStore.accessToken));
+        // console.log(
+        //     "access token changes, restablish websocket",
+        //     userStore.accessToken
+        // );
 
-        // TODO: remove later
-        wsStore.addOrderCallback((message) => {
-            toast.success("Your order is completed");
-        });
+        wsStore.setSocket(getWebsocket(user.accessToken));
+        wsStore.addOrderCallback(orderCallback);
+        wsStore.addMessageCallback(messageCallback);
 
-        return wsStore.closeSocket;
-    }, [userStore]);
+        return () => {
+            wsStore.removeMessageCallback(orderCallback);
+            wsStore.removeOrderCallback(messageCallback);
+            wsStore.closeSocket();
+        };
+    }, [user]);
 
     return <>{children}</>;
 };

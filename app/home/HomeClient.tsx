@@ -1,10 +1,9 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import useMenuItemPreviewModal from "../hooks/useMenuItemPreviewModal";
 import { MenuItem } from "@/types/MenuTypes";
 import MenuItemCard from "../components/MenuItemCard";
-import useUserStore from "../hooks/useUserStore";
 
 interface HomeClientProps {
     menuItems: MenuItem[];

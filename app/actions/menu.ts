@@ -9,8 +9,7 @@ export const getMenuItems = async (): Promise<MenuItem[]> => {
 };
 
 export const getMenuItem = async (id: string): Promise<MenuItem> => {
-    const item = (await axiosPublicInstance.get(`/api/v1/public/menu/${id}`)).data;
-    return item;
+    return await axiosPublicInstance.get(`/api/v1/public/menu/${id}`);
 };
 
 export const deleteMenuItem = async (id: string): Promise<null> => {
@@ -28,18 +27,20 @@ export const selloutMenuItem = async (id: string): Promise<null> => {
 export const createMenuItem = async (
     data: MenuItemFormValues
 ): Promise<MenuItem> => {
-    return (await axiosInstance.post("/api/v1/menu", data)).data;
+    return await axiosInstance.post("/api/v1/menu", data);
 };
 
 export const updateMenuItem = async (
     data: MenuItemFormValues
 ): Promise<MenuItem> => {
-    return (await axiosInstance.post(`/api/v1/menu/${data.id}`, data)).data;
+    console.log(data);
+    return await axiosInstance.post(`/api/v1/menu/${data.id}`, data);
 };
 
 export const getCategories = async (): Promise<MenuItemCategory[]> => {
     // TODO: use public api
-    return (await axiosPublicInstance.get("/api/v1/public/menu/categories")).data as MenuItemCategory[];
+    return (await axiosPublicInstance.get("/api/v1/public/menu/categories"))
+        .data as MenuItemCategory[];
 };
 
 export const deleteCategory = async (id: string): Promise<AxiosResponse> => {
@@ -55,4 +56,4 @@ export const updateCategory = async (
 
 export const addCategory = async (value: string): Promise<AxiosResponse> => {
     return await axiosInstance.post(`/api/v1/menu/categories`, { value });
-}
+};

@@ -9,10 +9,13 @@ const getData = async () => {
     return menuItems;
 };
 
-const MenuManagement = () => {
-    const menuItems = use(getData());
+const MenuManagement = async () => {
+    const menuItems = await getData();
     return (
         <div className="flex w-full">
+            Test:
+            <br />
+            {JSON.stringify(menuItems)}
             <ClientOnly>
                 <MenuEditModal />
                 <div className="flex-grow min-w-full min-h-screen">

@@ -11,10 +11,12 @@ export const apiBaseUrl = `http${
     process.env.NEXT_PUBLIC_ENVIRONMENT_NAME == "production" ? "s" : ""
 }://${apiBaseDomainName}`;
 
+// client side instance that needs auth header and can refresh token on 401
 const axiosInstance = axios.create({
     baseURL: apiBaseUrl,
 });
 
+// public instance does not need auth header, and can be used in server side rendering
 export const axiosPublicInstance = axios.create({
     baseURL: apiBaseUrl,
 });
@@ -65,6 +67,27 @@ const refreshToken = async () => {
     }));
 };
 
+const handleError = async (error: any) => {
+    if (error.response?.status == 401) {
+        if (!error.config._retry) {
+            console.log("refreshing token");
+            error.config._retry = true;
+            await refreshToken();
+            return axiosInstance(error.config);
+        }
+        if (toast) {
+            toast.error("You are not logged in.");
+        }
+        return Promise.reject(error);
+    } else if (toast && error.response?.data?.data?.message) {
+        // show error message if available (not serverside)
+        // with json like { message: "failed", data: { message: "...", timestamp: "..." } }
+        toast.error(error.response?.data?.data?.message);
+        return Promise.resolve(error);
+    }
+    return Promise.reject(error);
+};
+
 axiosInstance.interceptors.request.use((config) => {
     const token = useUserStore.getState().accessToken; // use getState() in zustand, not hooks
     if (token) {
@@ -76,23 +99,7 @@ axiosInstance.interceptors.request.use((config) => {
 axiosInstance.interceptors.response.use(
     (response) => unwrapDto(response),
     async (error) => {
-        if (error.response?.status == 401) {
-            if (!error.config._retry) {
-                // console.log("refreshing token");
-                error.config._retry = true;
-                await refreshToken();
-                return axiosInstance(error.config);
-            }
-            if (toast) {
-                toast.error("You are not logged in.");
-            }
-            return Promise.reject(error);
-        } else if (toast && error.response?.data?.data?.message) {
-            // show error message if available (not serverside)
-            // with json like { message: "failed", data: { message: "...", timestamp: "..." } }
-            toast.error(error.response?.data?.data?.message);
-        }
-        return Promise.reject(error);
+        await handleError(error);
     }
 );
 

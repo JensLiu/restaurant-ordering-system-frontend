@@ -9,9 +9,9 @@ const getData = async () => {
 const CategoryManagement = () => {
     const categories = use(getData())
     return (
-    <div>
+    <>
         <CategoryManagementClient categories={categories} />
-    </div>
+    </>
   )
 }
 

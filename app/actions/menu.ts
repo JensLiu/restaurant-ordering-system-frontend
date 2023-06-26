@@ -1,17 +1,16 @@
 import { MenuItem, MenuItemCategory } from "@/types/MenuTypes";
 import axiosInstance from "./axios";
 import { MenuItemFormValues } from "../admin/menu/hooks/MenuItemForm";
-import { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 
 // use public api to fetch at server side
-
 export const getMenuItems = async (): Promise<MenuItem[]> => {
-    const items = (await axiosInstance.get("/api/v1/public/menu")).data;
+    const items = (await axios.get("/api/v1/public/menu")).data;
     return items;
 };
 
 export const getMenuItem = async (id: string): Promise<MenuItem> => {
-    const item = (await axiosInstance.get(`/api/v1/public/menu/${id}`)).data;
+    const item = (await axios.get(`/api/v1/public/menu/${id}`)).data;
     return item;
 };
 
@@ -41,7 +40,7 @@ export const updateMenuItem = async (
 
 export const getCategories = async (): Promise<MenuItemCategory[]> => {
     // TODO: use public api
-    return (await axiosInstance.get("/api/v1/public/menu/categories")).data as MenuItemCategory[];
+    return (await axios.get("/api/v1/public/menu/categories")).data as MenuItemCategory[];
 };
 
 export const deleteCategory = async (id: string): Promise<AxiosResponse> => {

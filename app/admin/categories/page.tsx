@@ -1,18 +1,18 @@
-import { getCategories } from '@/app/actions/menu'
-import React, { use } from 'react'
-import CategoryManagementClient from './CategoryManagementClient'
+import { getCategories } from "@/app/actions/menu";
+import React, { use } from "react";
+import CategoryManagementClient from "./CategoryManagementClient";
 
 const getData = async () => {
-    return await getCategories()
-}
+    return [];
+};
 
 const CategoryManagement = () => {
-    const categories = use(getData())
+    const categories = use(getData());
     return (
-    <>
-        <CategoryManagementClient categories={categories} />
-    </>
-  )
-}
+        <>
+            <CategoryManagementClient categories={categories} />
+        </>
+    );
+};
 
-export default CategoryManagement
+export default CategoryManagement;

@@ -19,11 +19,6 @@ const axiosInstance = axios.create({
 // public instance does not need auth header, and can be used in server side rendering
 export const axiosPublicInstance = axios.create({
     baseURL: apiBaseUrl,
-    headers: {
-        "Cache-Control": "no-cache",
-        "Pragma": "no-cache",
-        "Expires": "0",
-    },
 });
 
 const unwrapDto = (response: AxiosResponse) => {

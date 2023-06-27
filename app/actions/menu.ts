@@ -39,11 +39,11 @@ export const deleteMenuItem = async (id: string): Promise<null> => {
 };
 
 export const enableMenuItem = async (id: string): Promise<null> => {
-    return await axiosInstance.put(`/api/v1/menu/${id}/enable`);
+    return await axiosInstance.post(`/api/v1/menu/${id}/enable`);
 };
 
 export const selloutMenuItem = async (id: string): Promise<null> => {
-    return await axiosInstance.put(`/api/v1/menu/${id}/soldout`);
+    return await axiosInstance.post(`/api/v1/menu/${id}/soldout`);
 };
 
 export const createMenuItem = async (

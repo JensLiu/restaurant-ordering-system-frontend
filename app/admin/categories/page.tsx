@@ -1,13 +1,9 @@
-import { getCategories } from "@/app/actions/menu";
+import { getCategories, getCategoriesServerSide } from "@/app/actions/menu";
 import React, { use } from "react";
 import CategoryManagementClient from "./CategoryManagementClient";
 
-const getData = async () => {
-    return [];
-};
-
-const CategoryManagement = () => {
-    const categories = use(getData());
+const CategoryManagement = async () => {
+    const categories = await getCategoriesServerSide();
     return (
         <>
             <CategoryManagementClient categories={categories} />

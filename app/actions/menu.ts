@@ -4,6 +4,8 @@ import { MenuItemFormValues } from "../admin/menu/hooks/MenuItemForm";
 import axios, { AxiosResponse } from "axios";
 
 // use public api to fetch at server side
+// only fetch api works at server side refreshing
+
 export const getMenuItems = async (): Promise<MenuItem[]> => {
     return (await axiosPublicInstance.get("/api/v1/public/menu")).data;
 };

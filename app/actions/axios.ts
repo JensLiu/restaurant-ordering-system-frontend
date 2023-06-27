@@ -14,18 +14,17 @@ export const apiBaseUrl = `http${
 // client side instance that needs auth header and can refresh token on 401
 const axiosInstance = axios.create({
     baseURL: apiBaseUrl,
-    // Solution provided by PedroTech at https://www.youtube.com/watch?v=8pzIuLFuv6U&ab_channel=PedroTech
-    // for fetching dynamic data from the server
-    headers: {
-        "Cache-Control": "no-cache",
-    }
 });
 
 // public instance does not need auth header, and can be used in server side rendering
 export const axiosPublicInstance = axios.create({
     baseURL: apiBaseUrl,
+    // Solution provided by PedroTech at https://www.youtube.com/watch?v=8pzIuLFuv6U&ab_channel=PedroTech
+    // for fetching dynamic data from the server
     headers: {
         "Cache-Control": "no-cache",
+        "Pragma": "no-cache",
+        "Expires": "0",
     },
 });
 

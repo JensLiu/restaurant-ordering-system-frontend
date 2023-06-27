@@ -1,7 +1,5 @@
 import { Role } from "@/types/UserTypes";
 import axiosInstance from "./axios";
-import toast from "react-hot-toast";
-import { AxiosError } from "axios";
 
 const LOGIN_API = "/auth/login";
 const SIGNUP_API = "/auth/register";

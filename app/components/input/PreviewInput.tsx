@@ -30,7 +30,7 @@ const PreviewInput: FC<PreviewInputProps> = ({
 }) => {
     const [isEditMode, setIsEditMode] = useState(false);
     return (
-        <div className="flex flex-cols-3 items-center w-full h-full gap-3">
+        <div className="flex items-center w-full h-full gap-3">
             <label className="text-bold">{label}:</label>
             {isEditMode ? (
                 <input

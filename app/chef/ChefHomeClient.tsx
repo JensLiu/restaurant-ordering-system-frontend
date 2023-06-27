@@ -13,9 +13,11 @@ const ChefHomeClient = () => {
     const wsStore = useWebSocketStore();
 
     useEffect(() => {
+        console.log("ChefHomeClient mounted")
         fetchOrders();
         wsStore.addOrderCallback(onOrderNotification);
         return () => {
+            console.log("ChefHomeClient unmounted")
             wsStore.removeOrderCallback(onOrderNotification);
         };
     }, [wsStore.addOrderCallback, wsStore.removeMessageCallback]);

@@ -26,12 +26,16 @@ const unwrapDto = (response: AxiosResponse) => {
     // with json like { message: "success", data: { ... } }
     // to { ... }
     if (response.data.data && response.data.message) {
+        // console.log("handling wrapper");
+        // console.log("before", response.data);
         const res = {
             ...response,
             data: response.data.data,
         };
+        // console.log("after", res.data);
         return res;
     }
+    // console.log("not handling wrapper", response.data);
     return response;
 };
 
@@ -49,34 +53,48 @@ export function handleResponseWrapper(response: AxiosResponse) {
  *
  */
 const refreshToken = async () => {
+    console.log("refreshing token");
     const refreshToken = useUserStore.getState().refreshToken;
-    const response = await axios.post(
-        `${apiBaseUrl}/auth/refresh`,
-        {}, // placeholder for empty request body
-        {
-            headers: {
-                Authorization: `Bearer ${refreshToken}`,
-            },
+    try {
+        const response = await axios.post(
+            `${apiBaseUrl}/auth/refresh`,
+            {}, // placeholder for empty request body
+            {
+                headers: {
+                    Authorization: `Bearer ${refreshToken}`,
+                },
+            }
+        );
+        // set refreshed tokens
+        useUserStore.setState((state) => ({
+            ...state,
+            accessToken: response.data.data.accessToken,
+            refreshToken: response.data.data.refreshToken,
+        }));
+        // console.log(
+        //     "updated access token",
+        //     useUserStore.getState().accessToken
+        // );
+        // console.log(
+        // "updated refresh token",
+        // useUserStore.getState().refreshToken
+        // );
+    } catch (error) {
+        // console.log("refresh token failed", error);
+        if (toast) {
+            toast.error("You are not signed in.");
+            useUserStore.getState().signOut();
         }
-    );
-    // set refreshed tokens
-    useUserStore.setState((state) => ({
-        ...state,
-        accessToken: response.data.data.accessToken,
-        refreshToken: response.data.data.refreshToken,
-    }));
+    }
 };
 
 const handleError = async (error: any) => {
     if (error.response?.status == 401) {
         if (!error.config._retry) {
-            console.log("refreshing token");
+            // console.log("refreshing token");
             error.config._retry = true;
             await refreshToken();
             return axiosInstance(error.config);
-        }
-        if (toast) {
-            toast.error("You are not logged in.");
         }
         return Promise.reject(error);
     } else if (toast && error.response?.data?.data?.message) {
@@ -89,7 +107,9 @@ const handleError = async (error: any) => {
 };
 
 axiosInstance.interceptors.request.use((config) => {
+    // console.log("intercepting request");
     const token = useUserStore.getState().accessToken; // use getState() in zustand, not hooks
+    // console.log("added token", token);
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }

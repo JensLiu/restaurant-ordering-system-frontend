@@ -7,16 +7,48 @@ import { User } from "@/types/UserTypes";
 import useUserStore from "@/app/hooks/useUserStore";
 import { getCurrentUser, updateUserData } from "@/app/actions/users";
 import PreviewInput from "@/app/components/input/PreviewInput";
+import ImageUpload from "@/app/components/ImageUpload";
 
 const UserProfilePage = () => {
     const userStore = useUserStore();
-    const [data, setData] = useState<User>();
     const [isLoading, setIsLoading] = useState(true);
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        setValue,
+        watch,
+        reset,
+    } = useForm<FieldValues>({
+        defaultValues: {
+            password: "",
+            firstname: "",
+            lastname: "",
+            imageSrc: "",
+            role: "",
+        },
+    });
+
+    const imageSrc = watch("imageSrc");
+    const firstname = watch("firstname");
+    const lastname = watch("lastname");
+    const email = watch("email");
+    const role = watch("role");
 
     const fetchData = () => {
         setIsLoading(true);
         getCurrentUser()
-            .then((user) => setData(user))
+            .then((user) => {
+                useUserStore.getState().refreshData();
+                reset({
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    email: user.email,
+                    imageSrc: user.imageSrc,
+                    role: user.role,
+                });
+            })
             .catch((error) => console.log(error))
             .finally(() => setIsLoading(false));
     };
@@ -26,10 +58,16 @@ const UserProfilePage = () => {
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         setIsLoading(true);
         updateUserData(data)
-            .then((newData) => {
-                reset(newData);
+            .then((user) => {
+                reset({
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    email: user.email,
+                    imageSrc: user.imageSrc,
+                    role: user.role,
+                });
+                useUserStore.getState().refreshData();
                 toast.success("Profile updated");
-                setData(newData);
             })
             .catch((error) => {
                 console.log(error);
@@ -44,42 +82,35 @@ const UserProfilePage = () => {
         fetchData();
     };
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        reset,
-    } = useForm<FieldValues>({
-        defaultValues: {
-            password: "",
-            firstname: data?.firstname,
-            lastname: data?.lastname,
-        },
-    });
-
     let bodyContent = (
-        <div className="grid grid-cols-2 gap-3 mx-5">
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-3 mx-5">
+            <div className="md:row-span-2">
+                <div className="flex flex-col items-center justify-center gap-3">
+                    <div className="font-semibold">Avatar</div>
+                    <ImageUpload
+                        onChange={(url: string) => {
+                            setValue("imageSrc", url);
+                        }}
+                        value={imageSrc}
+                    />
+                </div>
+            </div>
             <PreviewInput
                 label="Firstname"
                 id="firstname"
-                value={data?.firstname}
+                value={firstname}
                 register={register}
                 errors={errors}
             />
             <PreviewInput
                 label="Lastname"
                 id="lastname"
-                value={data?.lastname}
+                value={lastname}
                 register={register}
                 errors={errors}
             />
-            <PreviewInput
-                label="Email"
-                id="email"
-                value={data?.email}
-                disabled
-            />
-            <PreviewInput label="Role" id="email" value={data?.role} disabled />
+            <PreviewInput label="Email" id="email" value={email} disabled />
+            <PreviewInput label="Role" id="email" value={role} disabled />
         </div>
     );
 

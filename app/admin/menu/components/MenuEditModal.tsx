@@ -33,7 +33,7 @@ const MenuEditModal = () => {
     useEffect(() => {
         reset(menuModal.initialData);
         if (menuModal.initialData) {
-            console.log(menuModal.initialData);
+            // console.log(menuModal.initialData);
             setEditMode(true);
         } else {
             setEditMode(false);

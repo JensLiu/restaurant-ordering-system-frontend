@@ -1,7 +1,7 @@
 "use client";
 import { useWebSocketStore } from "../hooks/useWebSocketStore";
 import useUserStore from "../hooks/useUserStore";
-import { FC, use, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { getWebsocket } from "../actions/ws";
 
@@ -38,6 +38,9 @@ const orderCallback = (message: any) => {
         if (message.orderStatus === "WAITING") {
             toast.success("New order is waiting for you");
             showNotification(() => new Notification("New order"));
+        } else if (message.orderStatus === "PREPARING") {
+            toast.success("Order is being prepared by antoher chef");
+            showNotification(() => new Notification("Order is being prepared by antoher chef"));
         }
     }
 };
@@ -51,20 +54,22 @@ const NotificationProvider: FC<NotificationProviderProps> = ({ children }) => {
     const user = useUserStore.getState();
     const wsStore = useWebSocketStore();
     useEffect(() => {
+        console.log("Norification Provider mounted");
         if (user.accessToken === "") {
-            // console.log("no access token, no websocket");
+            console.log("no access token, no websocket");
             return;
         }
-        // console.log(
-        //     "access token changes, restablish websocket",
-        //     userStore.accessToken
-        // );
+        console.log(
+            "access token changed, restablish websocket",
+            user.accessToken
+        );
 
         wsStore.setSocket(getWebsocket(user.accessToken));
         wsStore.addOrderCallback(orderCallback);
         wsStore.addMessageCallback(messageCallback);
 
         return () => {
+            console.log("Notification Provider unmounted")
             wsStore.removeMessageCallback(orderCallback);
             wsStore.removeOrderCallback(messageCallback);
             wsStore.closeSocket();

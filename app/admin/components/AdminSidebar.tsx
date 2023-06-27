@@ -6,45 +6,30 @@ const AdminSidebar = () => {
     const router = useRouter();
     const pathname = usePathname();
 
+    const selections = [
+        { name: "Menu", path: "/admin/menu" },
+        { name: "Categories", path: "/admin/categories" },
+        { name: "Users", path: "/admin/users" },
+    ];
+
     return (
         <div className="flex flex-grow h-full overflow-hidden">
-            <div className="w-64">
-                <div className="flex items-center justify-between px-4 py-3">
-                    <span className="text-xl font-semibold">Pannel</span>
-                </div>
-                <nav className="mt-auto">
-                    <a
-                        className={`block py-2 px-4 text-sm hover:text-white hover:bg-gray-700 ${
-                            pathname.endsWith("/admin/menu")
-                                ? "bg-gray-700 text-white"
-                                : ""
-                        }}`}
-                        onClick={() => router.push("/admin/menu")}
-                    >
-                        Menu
-                    </a>
-                    <a
-                        className={`block py-2 px-4 text-sm hover:text-white hover:bg-gray-700 ${
-                            pathname.endsWith("/admin/categories")
-                                ? "bg-gray-700 text-white"
-                                : ""
-                        }}`}
-                        onClick={() => router.push("/admin/categories")}
-                    >
-                        Categories
-                    </a>
-                    <a
-                        className={`block py-2 px-4 text-sm hover:text-white hover:bg-gray-700 ${
-                            pathname.endsWith("/admin/users")
-                                ? "bg-gray-700 text-white"
-                                : ""
-                        }}`}
-                        onClick={() => router.push("/admin/users")}
-                    >
-                        Users
-                    </a>
-                </nav>
-            </div>
+            <ul className="menu bg-base-100 w-56">
+                {selections.map((selection, index) => (
+                    <li key={index}>
+                        <a
+                            onClick={() => router.push(selection.path)}
+                            className={`${
+                                pathname.endsWith(selection.path)
+                                    ? "active"
+                                    : ""
+                            }`}
+                        >
+                            {selection.name}
+                        </a>
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 };

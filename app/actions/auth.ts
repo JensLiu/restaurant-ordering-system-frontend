@@ -28,9 +28,9 @@ export type AuthResponse = TokenRefreshResponse & {
     imageSrc?: string;
 };
 
-export async function singUp(
+export const singUp = async (
     request: SignUpRequest
-): Promise<AuthResponse | undefined> {
+): Promise<AuthResponse | undefined> => {
     try {
         const response = await axiosInstance.post(SIGNUP_API, {
             email: request.email,
@@ -40,16 +40,23 @@ export async function singUp(
         });
         return response.data as AuthResponse;
     } catch (error) {}
-}
+};
 
-export async function signIn(
+export const signIn = async (
     request: LoginRequest
-): Promise<AuthResponse | undefined> {
+): Promise<AuthResponse | undefined> => {
     try {
         const response = await axiosInstance.post(LOGIN_API, {
             email: request.email,
             password: request.password,
         });
+        return response.data as AuthResponse;
+    } catch (error) {}
+};
+
+export const getCurrentUser = async (): Promise<AuthResponse | undefined> => {
+    try {
+        const response = await axiosInstance.get("/api/v1/users/me");
         return response.data as AuthResponse;
     } catch (error) {}
 }

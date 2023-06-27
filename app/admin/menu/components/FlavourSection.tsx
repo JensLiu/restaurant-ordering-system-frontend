@@ -8,7 +8,7 @@ interface FlavourSectionProps {
 }
 
 const FlavourSection: FC<FlavourSectionProps> = ({ form }) => {
-    const { control, register } = form;
+    const { control, getValues, register } = form;
     const { fields, append, remove } = useFieldArray({
         control,
         name: "flavours",
@@ -20,36 +20,42 @@ const FlavourSection: FC<FlavourSectionProps> = ({ form }) => {
                 <span className="font-semibold">Flavours</span>
                 <button
                     className="btn btn-xs"
-                    onClick={() => append({ name: "" })}
+                    onClick={() => append({ id: "", name: "" })}
                 >
                     ADD
                 </button>
             </div>
-            {fields.map((field, index) => (
-                <div
-                    key={field.id}
-                    className="flex flex-row gap-3 my-3 justify-between items-center"
-                >
-                    <label className="input-group">
-                        <span>Flavour</span>
-                        <input
-                            type="text"
-                            placeholder=""
-                            className="input input-bordered w-full"
-                            {...register(`flavours.${index}.name`, {
-                                required: true,
-                            })}
-                            color={"primary"}
-                        />
-                    </label>
-                    <button
-                        onClick={() => remove(index)}
-                        className="btn btn-error btn-circle"
+            {fields.map((field, index) => {
+                const id = getValues(`flavours.${index}.id`);
+                const disabled = id != (undefined || null || "");
+                return (
+                    <div
+                        key={field.id}
+                        className="flex flex-row gap-3 my-3 justify-between items-center"
                     >
-                        <BsTrash size={16} />
-                    </button>
-                </div>
-            ))}
+                        <label className="input-group">
+                            <span>Flavour</span>
+                            <input
+                                type="text"
+                                placeholder=""
+                                className="input input-bordered w-full"
+                                {...register(`flavours.${index}.name`, {
+                                    required: true,
+                                })}
+                                color={"primary"}
+                                disabled={disabled}
+                            />
+                        </label>
+
+                        <button
+                            onClick={() => remove(index)}
+                            className="btn btn-error btn-circle"
+                        >
+                            <BsTrash size={16} />
+                        </button>
+                    </div>
+                );
+            })}
         </div>
     );
 };

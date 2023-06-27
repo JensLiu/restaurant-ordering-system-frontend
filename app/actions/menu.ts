@@ -12,12 +12,10 @@ export const getMenuItems = async (): Promise<MenuItem[]> => {
 
 export const getMenuItemsServerSide = async (): Promise<MenuItem[]> => {
     const url = `${apiBaseUrl}/api/v1/public/menu`;
-    console.log(url);
     const menuItems = await fetch(url, {
         cache: "no-cache",
     });
     const json = await menuItems.json();
-    console.log(json);
     return json.data;
 };
 
@@ -61,17 +59,19 @@ export const updateMenuItem = async (
 
 export const getCategories = async (): Promise<MenuItemCategory[]> => {
     return (await axiosPublicInstance.get("/api/v1/public/menu/categories"))
-    .data as MenuItemCategory[];
+        .data as MenuItemCategory[];
 };
 
-export const getCategoriesServerSide = async (): Promise<MenuItemCategory[]> => {
+export const getCategoriesServerSide = async (): Promise<
+    MenuItemCategory[]
+> => {
     const url = `${apiBaseUrl}/api/v1/public/menu/categories`;
     const response = await fetch(url, {
         cache: "no-cache",
     });
     const json = await response.json();
     return json.data;
-}
+};
 
 export const deleteCategory = async (id: string): Promise<AxiosResponse> => {
     return await axiosInstance.delete(`/api/v1/menu/categories/${id}`);

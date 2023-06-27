@@ -6,8 +6,8 @@ export type MenuItemFormValues = {
     name: string;
     description: string;
     imageSrc: string;
-    flavours: { name: string }[];
-    sizes: { size: string; price: number }[];
+    flavours: { id: string, name: string }[];
+    sizes: { id: string, size: string; price: number }[];
     categories: { id: string; value: string }[];
     isSoldOut: boolean;
 };
@@ -17,8 +17,8 @@ export const menuItemFormDefaultValues: MenuItemFormValues = {
     name: "",
     description: "",
     imageSrc: "",
-    flavours: [{ name: "" }],
-    sizes: [{ size: "", price: 0 }],
+    flavours: [{ id: "",  name: "" }],
+    sizes: [{ id: "", size: "", price: 0 }],
     categories: [],
     isSoldOut: false,
 };
@@ -29,4 +29,4 @@ export const useMenuItemForm = (initialData?: MenuItem) => {
     });
 };
 
-export const emptySizeAndPrice = { size: "", price: 0 };
+export const emptySizeAndPrice = { id: "", size: "", price: 0 };

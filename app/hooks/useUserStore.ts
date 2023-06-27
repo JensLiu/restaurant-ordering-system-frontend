@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { signIn, singUp } from "../actions/auth";
+import { getCurrentUser, signIn, singUp } from "../actions/auth";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { Role } from "@/types/UserTypes";
 import { deleteCookie, setCookie, setCookies } from "cookies-next";
@@ -29,6 +29,7 @@ interface UserState {
         callback?: (message: any) => void
     ) => void;
     signOut: (callback?: (message: any) => void) => void;
+    refreshData: () => void;
 }
 
 export const roleCookieName = "_app_role";
@@ -93,6 +94,10 @@ const useUserStore = create<UserState>()(
                 deleteCookie(roleCookieName);
                 callback && callback(true);
             },
+            refreshData: async () => {
+                const response = await getCurrentUser();
+                set(wrapResponseDataAsState(response));
+            }
         }),
         {
             name: "user-storage",

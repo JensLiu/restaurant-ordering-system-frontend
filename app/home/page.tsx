@@ -4,13 +4,8 @@ import ClientOnly from "../components/ClientOnly";
 import HomeClient from "./HomeClient";
 import MenuItemPreviewModal from "./components/MenuItemPreviewModal";
 
-// const getData = async () => {
-//     return await getMenuItems();
-// }
-
 const HomePage = async () => {
 
-    // const menuItems = use(getMenuItems());
     const menuItems = await getMenuItemsServerSide();
 
     return (

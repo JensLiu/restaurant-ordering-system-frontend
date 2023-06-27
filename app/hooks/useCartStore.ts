@@ -6,7 +6,7 @@ import {
 } from "@/types/OrderTypes";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { websiteBaseDomainName, websiteBaseUrl } from "../actions/axios";
+import { paymentCancelUrl, paymentSuccessUrl } from "../actions/axios";
 
 interface CartState {
     items: SelectedItem[];
@@ -102,8 +102,8 @@ const useCart = create<CartState>()(
                 );
                 return {
                     orderItems: orderItemDto,
-                    successUrl: `${websiteBaseUrl}/order/success`,
-                    cancelUrl: `${websiteBaseUrl}/order/cancel`,
+                    successUrl: paymentSuccessUrl,
+                    cancelUrl: paymentCancelUrl,
                 };
             },
             clearCart: () => {

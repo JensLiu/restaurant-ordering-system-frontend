@@ -20,6 +20,9 @@ export const apiBaseUrl = `http${
     process.env.NEXT_PUBLIC_ENVIRONMENT_NAME == "production" ? "s" : ""
 }://${apiBaseDomainName}`;
 
+export const paymentSuccessUrl = `${websiteBaseUrl}/me/orders`;
+export const paymentCancelUrl = `${websiteBaseUrl}/me/orders`;
+
 // client side instance that needs auth header and can refresh token on 401
 const axiosInstance = axios.create({
     baseURL: apiBaseUrl,

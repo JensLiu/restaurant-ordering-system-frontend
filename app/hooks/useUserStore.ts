@@ -96,7 +96,6 @@ const useUserStore = create<UserState>()(
             },
             refreshData: async () => {
                 const response = await getCurrentUser();
-                console.log(response);
                 set((state) => ({
                     ...state,
                     firstname: response?.firstname,

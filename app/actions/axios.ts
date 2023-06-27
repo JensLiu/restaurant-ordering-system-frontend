@@ -7,6 +7,15 @@ export const apiBaseDomainName =
         ? "necessary-soap-production.up.railway.app"
         : "localhost:8080";
 
+export const websiteBaseDomainName =
+    process.env.NEXT_PUBLIC_ENVIRONMENT_NAME == "production"
+        ? "ordering.jensdevelops.de"
+        : "localhost:3000";
+
+export const websiteBaseUrl = `http${
+    process.env.NEXT_PUBLIC_ENVIRONMENT_NAME == "production" ? "s" : ""
+}://${websiteBaseDomainName}`;
+
 export const apiBaseUrl = `http${
     process.env.NEXT_PUBLIC_ENVIRONMENT_NAME == "production" ? "s" : ""
 }://${apiBaseDomainName}`;
@@ -53,7 +62,7 @@ export function handleResponseWrapper(response: AxiosResponse) {
  *
  */
 const refreshToken = async () => {
-    console.log("refreshing token");
+    // console.log("refreshing token");
     const refreshToken = useUserStore.getState().refreshToken;
     try {
         const response = await axios.post(

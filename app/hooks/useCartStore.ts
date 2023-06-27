@@ -6,6 +6,7 @@ import {
 } from "@/types/OrderTypes";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import { websiteBaseDomainName, websiteBaseUrl } from "../actions/axios";
 
 interface CartState {
     items: SelectedItem[];
@@ -38,7 +39,7 @@ const useCart = create<CartState>()(
             },
             addToCart: (item, selectedSize, selectedFlavour, qty) => {
                 set((state) => {
-                    // check if item with the same flavour and size is selected 
+                    // check if item with the same flavour and size is selected
                     const prevIndex = state.items.findIndex(
                         (val) =>
                             val.id === item.id &&
@@ -101,13 +102,13 @@ const useCart = create<CartState>()(
                 );
                 return {
                     orderItems: orderItemDto,
-                    successUrl: "http://localhost:3000/me/orders",
-                    cancelUrl: "http://localhost:3000/me/orders",
+                    successUrl: `${websiteBaseUrl}/order/success`,
+                    cancelUrl: `${websiteBaseUrl}/order/cancel`,
                 };
             },
             clearCart: () => {
-                set(() => ({items: []}))
-            }
+                set(() => ({ items: [] }));
+            },
         }),
         {
             name: "user-storage",

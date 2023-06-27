@@ -96,8 +96,14 @@ const useUserStore = create<UserState>()(
             },
             refreshData: async () => {
                 const response = await getCurrentUser();
-                set(wrapResponseDataAsState(response));
-            }
+                console.log(response);
+                set((state) => ({
+                    ...state,
+                    firstname: response?.firstname,
+                    lastname: response?.lastname,
+                    imageSrc: response?.imageSrc,
+                }));
+            },
         }),
         {
             name: "user-storage",

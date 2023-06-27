@@ -2,17 +2,10 @@ import React, { use } from "react";
 import MenuEditModal from "./components/MenuEditModal";
 import MenuManagementClient from "./MenuManagementClient";
 import ClientOnly from "@/app/components/ClientOnly";
-import { getMenuItems } from "@/app/actions/menu";
-
-const getData = async () => {
-    console.log("start fetching menu items")
-    const menuItems = await getMenuItems();
-    console.log("finish fetching menu items")
-    return menuItems;
-};
+import { getMenuItemsServerSide } from "@/app/actions/menu";
 
 const MenuManagement = async () => {
-    const menuItems = await getData();
+    const menuItems = await getMenuItemsServerSide();
     console.log(menuItems);
     return (
         <div className="flex w-full">

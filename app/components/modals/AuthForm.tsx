@@ -151,22 +151,26 @@ const AuthForm = () => {
             <Modal.Body>{formBody}</Modal.Body>
             <Modal.Actions>
                 <div className="flex flex-col-2 w-full justify-between items-center">
-                    <div>
-                        <span>
-                            {variant == "LOGIN"
-                                ? "Don't have an account?"
-                                : "Already have an account?"}
-                        </span>
-                        <span
-                            onClick={toggleVariant}
-                            className="ml-2 underline cursor-pointer"
-                        >
-                            {variant == "LOGIN" ? "Sign up" : "Log in"}
-                        </span>
-                    </div>
-                    <Button onClick={handleSubmit(onSubmit)}>
-                        {variant == "LOGIN" ? "Log in" : "Sign up"}
-                    </Button>
+                    {!isLoading && (
+                        <>
+                            <div>
+                                <span>
+                                    {variant == "LOGIN"
+                                        ? "Don't have an account?"
+                                        : "Already have an account?"}
+                                </span>
+                                <span
+                                    onClick={toggleVariant}
+                                    className="ml-2 underline cursor-pointer"
+                                >
+                                    {variant == "LOGIN" ? "Sign up" : "Log in"}
+                                </span>
+                            </div>
+                            <Button onClick={handleSubmit(onSubmit)}>
+                                {variant == "LOGIN" ? "Log in" : "Sign up"}
+                            </Button>
+                        </>
+                    )}
                 </div>
             </Modal.Actions>
         </Modal>

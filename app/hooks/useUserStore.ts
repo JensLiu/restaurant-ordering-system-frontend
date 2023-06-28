@@ -3,6 +3,7 @@ import { getCurrentUser, signIn, singUp } from "../actions/auth";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { Role } from "@/types/UserTypes";
 import { deleteCookie, setCookie, setCookies } from "cookies-next";
+import { useWebSocketStore } from "./useWebSocketStore";
 
 export type UserRole = "CUSTOMER" | "CHEF" | "ADMIN";
 
@@ -92,6 +93,7 @@ const useUserStore = create<UserState>()(
             signOut: (callback?: (message: any) => void) => {
                 set(() => ({ ...defaultState }));
                 deleteCookie(roleCookieName);
+                useWebSocketStore.getState().close();
                 callback && callback(true);
             },
             refreshData: async () => {

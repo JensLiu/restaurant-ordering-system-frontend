@@ -7,6 +7,8 @@ import { Inter } from "next/font/google";
 import Footer from "./components/Footer";
 import CartDrawer from "./components/cart/CartDrawer";
 import NotificationProvider from "./components/NotificationProvider";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +23,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html data-theme="emerald" lang="en">
+        <html lang="en">
             <body className={inter.className}>
                 <div className="min-h-screen">
                     <ClientOnly>
@@ -31,7 +33,7 @@ export default function RootLayout({
                         <AuthForm />
                         <NotificationProvider />
                     </ClientOnly>
-
+                    {/* <Suspense fallback={<Loading />}>{children}</Suspense> */}
                     <>{children}</>
                 </div>
                 <Footer />

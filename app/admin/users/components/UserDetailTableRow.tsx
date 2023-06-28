@@ -1,5 +1,4 @@
 import { Role } from "@/types/UserTypes";
-import clsx from "clsx";
 import React, { FC } from "react";
 
 interface UserDetailTebleRowProps {
@@ -25,14 +24,12 @@ const UserDetailTableRow: FC<UserDetailTebleRowProps> = ({
                 <div className="flex items-center space-x-3">
                     <div className="avatar">
                         <div className="mask mask-squircle w-12 h-12">
-                            <img
-                                src={
-                                    imageSrc
-                                        ? imageSrc
-                                        : "/images/placeholder.jpg"
-                                }
-                                alt="Avatar Tailwind CSS Component"
-                            />
+                            {imageSrc && (
+                                <img
+                                    src={imageSrc}
+                                    alt="Avatar Tailwind CSS Component"
+                                />
+                            )}
                         </div>
                     </div>
                     <div>

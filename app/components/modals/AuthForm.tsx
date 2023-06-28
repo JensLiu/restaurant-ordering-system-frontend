@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useAuthForm from "@/app/hooks/useAuthForm";
 import { Avatar, Button, Input, Modal } from "react-daisyui";
 import { FieldValues, useForm } from "react-hook-form";
@@ -34,14 +34,14 @@ const AuthForm = () => {
 
     const onSubmit = async (data: FieldValues) => {
         setIsLoading(true);
-
         if (variant == "LOGIN") {
             userStore?.signIn(data.email, data.password, (success) => {
                 if (success as boolean) {
-                    toast.success("logged in");
                     handleClose();
+                    toast.success("logged in");
                     router.refresh();
                 }
+                setIsLoading(false);
             });
         } else if (variant == "REGISTER") {
             userStore?.signUp(
@@ -52,14 +52,13 @@ const AuthForm = () => {
                 (success) => {
                     if (success as boolean) {
                         toast.success("signed up");
-                        handleClose();
+                        setVariant("LOGIN");
                         router.refresh();
                     }
+                    setIsLoading(false);
                 }
             );
         }
-
-        setIsLoading(false);
     };
 
     const toggleVariant = useCallback(() => {
@@ -75,6 +74,67 @@ const AuthForm = () => {
         reset();
     }, [loginModal, reset]);
 
+    let formBody = (
+        <div className="flex flex-col pt-5 my-4 gap-4 justify-center">
+            <div className="flex justify-center mb-3">
+                <Avatar
+                    shape="circle"
+                    size="md"
+                    src="/images/avatar_placeholder.jpg"
+                />
+            </div>
+            {variant == "REGISTER" && (
+                <>
+                    <Input
+                        id="firstname"
+                        disabled={isLoading}
+                        bordered
+                        placeholder="First Name"
+                        {...register("firstname", { required: true })}
+                        color={errors["firstname"] ? "error" : "primary"}
+                    />
+                    <Input
+                        id="lastname"
+                        disabled={isLoading}
+                        bordered
+                        placeholder="Last Name"
+                        {...register("lastname", { required: true })}
+                        color={errors["lastname"] ? "error" : "primary"}
+                    />
+                </>
+            )}
+
+            <Input
+                id="email"
+                type="email"
+                placeholder="Email"
+                disabled={isLoading}
+                bordered
+                {...register("email", { required: true })}
+                color={errors["email"] ? "error" : "primary"}
+            />
+            <Input
+                id="password"
+                type="password"
+                placeholder="Password"
+                disabled={isLoading}
+                bordered
+                {...register("password", { required: true })}
+                color={errors["password"] ? "error" : "primary"}
+            />
+        </div>
+    );
+
+    if (isLoading) {
+        formBody = (
+            <div className="flex flex-col min-h-full min-w-full gap-3 items-center justify-center">
+                <div className="text-xl font-semibold">Loggin in</div>
+                <div className="test-md">We will be with you in a moment</div>
+                <div className="loading loading-spinner loading-lg"></div>
+            </div>
+        );
+    }
+
     return (
         <Modal open={loginModal.isOpen}>
             <Button
@@ -88,58 +148,7 @@ const AuthForm = () => {
             <Modal.Header>
                 {variant == "LOGIN" ? "Welcome back!" : "Hello there!"}
             </Modal.Header>
-            <Modal.Body>
-                <div className="flex flex-col pt-5 my-4 gap-4 justify-center">
-                    <div className="flex justify-center mb-3">
-                        <Avatar
-                            shape="circle"
-                            size="md"
-                            src="/images/avatar_placeholder.jpg"
-                        />
-                    </div>
-                    {variant == "REGISTER" && (
-                        <>
-                            <Input
-                                id="firstname"
-                                disabled={isLoading}
-                                bordered
-                                placeholder="First Name"
-                                {...register("firstname", { required: true })}
-                                color={
-                                    errors["firstname"] ? "error" : "primary"
-                                }
-                            />
-                            <Input
-                                id="lastname"
-                                disabled={isLoading}
-                                bordered
-                                placeholder="Last Name"
-                                {...register("lastname", { required: true })}
-                                color={errors["lastname"] ? "error" : "primary"}
-                            />
-                        </>
-                    )}
-
-                    <Input
-                        id="email"
-                        type="email"
-                        placeholder="Email"
-                        disabled={isLoading}
-                        bordered
-                        {...register("email", { required: true })}
-                        color={errors["email"] ? "error" : "primary"}
-                    />
-                    <Input
-                        id="password"
-                        type="password"
-                        placeholder="Password"
-                        disabled={isLoading}
-                        bordered
-                        {...register("password", { required: true })}
-                        color={errors["password"] ? "error" : "primary"}
-                    />
-                </div>
-            </Modal.Body>
+            <Modal.Body>{formBody}</Modal.Body>
             <Modal.Actions>
                 <div className="flex flex-col-2 w-full justify-between items-center">
                     <div>

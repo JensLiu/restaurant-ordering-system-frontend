@@ -20,11 +20,15 @@ const UserManagement = () => {
 
     const header = ["Name", "Email", "Actions"];
 
-    return (
-        <div className="container mx-auto py-6">
-            <h1 className="text-3xl font-bold mb-4">Manage users</h1>
-            <h1 className="text-md font-medium mb-4">Customers and chefs</h1>
-            <table className="table min-w-full">
+    let tableContent = (
+        <div className="flex min-w-full min-h-full items-center justify-center">
+            <span className="loading loading-dots loading-lg"></span>
+        </div>
+    );
+
+    if (!isLoading) {
+        tableContent = (
+            <table className="table min-w-full table-lg">
                 {/* head */}
                 <thead>
                     <tr>
@@ -55,6 +59,14 @@ const UserManagement = () => {
                     </tr>
                 </tfoot>
             </table>
+        );
+    }
+
+    return (
+        <div className="container mx-auto py-6">
+            <h1 className="text-3xl font-bold mb-4">Manage users</h1>
+            <h1 className="text-md font-medium mb-4">Customers and chefs</h1>
+            {tableContent}
         </div>
     );
 };

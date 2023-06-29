@@ -6,8 +6,8 @@ export default function AdminLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="flex flex-col-2 min-h-full gap-4">
-            <div className="flex">
+        <div className="container flex">
+            <div className="">
                 <AdminSidebar />
             </div>
             <div className="flex flex-grow">{children}</div>

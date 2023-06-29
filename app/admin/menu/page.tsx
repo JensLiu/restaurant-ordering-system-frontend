@@ -7,12 +7,10 @@ import { getMenuItemsServerSide } from "@/app/actions/menu";
 const MenuManagement = async () => {
     const menuItems = await getMenuItemsServerSide();
     return (
-        <div className="flex w-full">
+        <div className="container mx-auto py-6">
             <ClientOnly>
                 <MenuEditModal />
-                <div className="flex-grow min-w-full min-h-screen">
-                    <MenuManagementClient menuItems={menuItems} />
-                </div>
+                <MenuManagementClient menuItems={menuItems} />
             </ClientOnly>
         </div>
     );

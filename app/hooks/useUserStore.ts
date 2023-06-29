@@ -1,13 +1,14 @@
 import { create } from "zustand";
-import { getCurrentUser, signIn, singUp } from "../actions/auth";
+import { getCurrentUser, getRefreshedTokens, signIn, singUp } from "../actions/auth";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { Role } from "@/types/UserTypes";
 import { deleteCookie, setCookie, setCookies } from "cookies-next";
 import { useWebSocketStore } from "./useWebSocketStore";
+import { getFromLocalStorage, localUserStorekey } from "../actions/default";
 
 export type UserRole = "CUSTOMER" | "CHEF" | "ADMIN";
 
-interface UserState {
+interface UserStateData {
     id: string;
     email: string;
     role: Role;
@@ -17,6 +18,9 @@ interface UserState {
     accessToken: string;
     refreshToken: string;
     isAuthenticated: boolean;
+}
+
+interface UserState extends UserStateData {
     signIn: (
         email: string,
         password: string,
@@ -61,10 +65,19 @@ const defaultState = {
     isAuthenticated: false,
 };
 
+const getInitialValue = (): UserStateData => {
+    // const initialValue = getFromLocalStorage<UserStateData>(localUserStorekey);
+    // if (initialValue) {
+    //     validateUser()
+    //     return initialValue;
+    // }
+    return getFromLocalStorage<UserStateData>(localUserStorekey) || defaultState;
+};
+
 const useUserStore = create<UserState>()(
     persist(
         (set) => ({
-            ...defaultState,
+            ...getInitialValue(),
             signUp: async (email, password, firstname, lastname, callback) => {
                 const response = await singUp({
                     email,
@@ -107,7 +120,7 @@ const useUserStore = create<UserState>()(
             },
         }),
         {
-            name: "user-storage",
+            name: localUserStorekey,
             storage: createJSONStorage(() => localStorage),
         }
     )

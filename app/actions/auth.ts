@@ -1,5 +1,9 @@
 import { Role } from "@/types/UserTypes";
 import axiosInstance from "./axios";
+import axios from "axios";
+import { apiBaseUrl } from "./default";
+import useUserStore from "../hooks/useUserStore";
+import toast from "react-hot-toast";
 
 const LOGIN_API = "/auth/login";
 const SIGNUP_API = "/auth/register";
@@ -59,4 +63,31 @@ export const getCurrentUser = async (): Promise<AuthResponse | undefined> => {
         const response = await axiosInstance.get("/api/v1/users/me");
         return response.data as AuthResponse;
     } catch (error) {}
-}
+};
+
+export const getRefreshedTokens = async (
+    currentRefreshToken: string
+): Promise<TokenRefreshResponse | undefined> => {
+    try {
+        const response = await axios.post(
+            `${apiBaseUrl}/auth/refresh`,
+            {}, // placeholder for empty request body
+            {
+                headers: {
+                    Authorization: `Bearer ${currentRefreshToken}`,
+                },
+            }
+        );
+        return response.data.data as TokenRefreshResponse;
+    } catch (error) {
+        console.log("refresh token failed", error);
+        if (toast) {
+            toast.error("You are not signed in.");
+            useUserStore.getState().signOut();
+        }
+    }
+};
+
+// export const validateUser = async (token: string): Promise<boolean> => {
+//     return true;
+// }

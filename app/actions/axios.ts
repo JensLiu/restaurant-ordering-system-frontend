@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import useUserStore from "../hooks/useUserStore";
 import { toast } from "react-hot-toast";
 import { apiBaseUrl } from "./default";
+import { getRefreshedTokens } from "./auth";
 
 // client side instance that needs auth header and can refresh token on 401
 const axiosInstance = axios.create({
@@ -44,40 +45,16 @@ export function handleResponseWrapper(response: AxiosResponse) {
  * credit: porone at stackoverflow
  *
  */
-const refreshToken = async () => {
+const refreshToken = async (currentRefreshToken: string) => {
     // console.log("refreshing token");
-    const refreshToken = useUserStore.getState().refreshToken;
-    try {
-        const response = await axios.post(
-            `${apiBaseUrl}/auth/refresh`,
-            {}, // placeholder for empty request body
-            {
-                headers: {
-                    Authorization: `Bearer ${refreshToken}`,
-                },
-            }
-        );
+    const response = await getRefreshedTokens(currentRefreshToken);
+    if (response) {
         // set refreshed tokens
         useUserStore.setState((state) => ({
             ...state,
-            accessToken: response.data.data.accessToken,
-            refreshToken: response.data.data.refreshToken,
+            accessToken: response.accessToken,
+            refreshToken: response.refreshToken,
         }));
-        // console.log(
-        //     "updated access token",
-        //     useUserStore.getState().accessToken
-        // );
-        // console.log(
-        // "updated refresh token",
-        // useUserStore.getState().refreshToken
-        // );
-    } catch (error) {
-        console.log("refresh token failed", error);
-        if (toast) {
-            
-            toast.error("You are not signed in.");
-            // useUserStore.getState().signOut();
-        }
     }
 };
 
@@ -86,7 +63,7 @@ const handleError = async (error: any) => {
         if (!error.config._retry) {
             // console.log("refreshing token");
             error.config._retry = true;
-            await refreshToken();
+            await refreshToken(useUserStore.getState().refreshToken);
             return axiosInstance(error.config);
         }
         return Promise.reject(error);
@@ -102,7 +79,7 @@ const handleError = async (error: any) => {
 axiosInstance.interceptors.request.use((config) => {
     // console.log("intercepting request");
     const token = useUserStore.getState().accessToken; // use getState() in zustand, not hooks
-    console.log(useUserStore.getState())
+    console.log(useUserStore.getState());
     // console.log("added token", token);
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;

@@ -6,10 +6,13 @@ import {
 } from "@/types/OrderTypes";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { paymentCancelUrl, paymentSuccessUrl } from "../actions/default";
+import { getFromLocalStorage, localCartStorekey, paymentCancelUrl, paymentSuccessUrl } from "../actions/default";
 
-interface CartState {
+interface CartStateData {
     items: SelectedItem[];
+}
+
+interface CartState extends CartStateData {
     totalPrice: () => number;
     addToCart: (
         item: MenuItem,
@@ -24,10 +27,14 @@ interface CartState {
     clearCart: () => void;
 }
 
+const getInitialValue = () => {
+    return getFromLocalStorage<CartStateData>(localCartStorekey) || { items: [] } ;
+}
+
 const useCart = create<CartState>()(
     persist(
         (set, get) => ({
-            items: [],
+            ...getInitialValue(),
             totalPrice: () => {
                 // total price = sum(subtotals)
                 // subtotal = price * quantity
@@ -111,7 +118,7 @@ const useCart = create<CartState>()(
             },
         }),
         {
-            name: "user-storage",
+            name: localCartStorekey,
             storage: createJSONStorage(() => localStorage),
         }
     )

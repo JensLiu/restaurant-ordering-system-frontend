@@ -5,12 +5,12 @@ interface CartDrawerState {
     isOpen: boolean;
     onOpen: () => void;
     onClose: () => void;
-    modalId: string;
+    drawerId: string;
 }
 
 const useCartDrawer = create<CartDrawerState>()((set) => ({
     isOpen: false,
-    modalId: "cart-drawer",
+    drawerId: "cart-drawer",
     onOpen: () => set({ isOpen: true }),
     onClose: () => set({ isOpen: false }),
 }));

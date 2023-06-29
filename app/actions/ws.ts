@@ -1,9 +1,12 @@
-import { apiBaseDomainName } from "./axios";
+import { apiBaseDomainName } from "./default";
 
 export const getWebsocket = (token: string): WebSocket => {
     const wsUrl = `ws${
         process.env.NEXT_PUBLIC_ENVIRONMENT_NAME == "production" ? "s" : ""
     }://${apiBaseDomainName}/ws/notifications/${token}`;
+    
+    console.log(wsUrl);
+
     return new WebSocket(wsUrl);
 };
 
@@ -17,11 +20,15 @@ export const getWebsocket = (token: string): WebSocket => {
  *
  */
 export const startHeartBeat = (ws: WebSocket): NodeJS.Timer => {
-    const timeoutInterval = 10 * 1000;
+    const timeoutInterval = 55 * 1000;
     const timer = setInterval(() => {
         if (ws && ws.readyState == 1) {
             console.log("sending heartbeat");
-            ws.send("heartbeat");
+            ws.send(
+                JSON.stringify({
+                    type: "HEARTBEAT",
+                })
+            );
         } else {
             console.log("websocket disconnected! closing heartbeat");
             clearInterval(timer);

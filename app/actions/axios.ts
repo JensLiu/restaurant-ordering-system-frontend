@@ -1,27 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import useUserStore from "../hooks/useUserStore";
 import { toast } from "react-hot-toast";
-
-export const apiBaseDomainName =
-    process.env.NEXT_PUBLIC_ENVIRONMENT_NAME == "production"
-        ? "necessary-soap-production.up.railway.app"
-        : "localhost:8080";
-
-export const websiteBaseDomainName =
-    process.env.NEXT_PUBLIC_ENVIRONMENT_NAME == "production"
-        ? "ordering.jensdevelops.de"
-        : "localhost:3000";
-
-export const websiteBaseUrl = `http${
-    process.env.NEXT_PUBLIC_ENVIRONMENT_NAME == "production" ? "s" : ""
-}://${websiteBaseDomainName}`;
-
-export const apiBaseUrl = `http${
-    process.env.NEXT_PUBLIC_ENVIRONMENT_NAME == "production" ? "s" : ""
-}://${apiBaseDomainName}`;
-
-export const paymentSuccessUrl = `${websiteBaseUrl}/me/orders`;
-export const paymentCancelUrl = `${websiteBaseUrl}/me/orders`;
+import { apiBaseUrl } from "./default";
 
 // client side instance that needs auth header and can refresh token on 401
 const axiosInstance = axios.create({
@@ -92,10 +72,11 @@ const refreshToken = async () => {
         // useUserStore.getState().refreshToken
         // );
     } catch (error) {
-        // console.log("refresh token failed", error);
+        console.log("refresh token failed", error);
         if (toast) {
+            
             toast.error("You are not signed in.");
-            useUserStore.getState().signOut();
+            // useUserStore.getState().signOut();
         }
     }
 };
@@ -121,6 +102,7 @@ const handleError = async (error: any) => {
 axiosInstance.interceptors.request.use((config) => {
     // console.log("intercepting request");
     const token = useUserStore.getState().accessToken; // use getState() in zustand, not hooks
+    console.log(useUserStore.getState())
     // console.log("added token", token);
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;

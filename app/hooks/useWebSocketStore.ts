@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { getWebsocket, startHeartBeat } from "../actions/ws";
+import useUserStore from "./useUserStore";
 
 export type Callbacks = {
     orderCallbacks: ((message: any) => void)[];
@@ -90,7 +91,7 @@ export const useWebSocketStore = create<NotificationWsStore>((set, get) => ({
                 },
             };
         });
-        console.log("current callbacks", get().callbacks);
+        // console.log("current callbacks", get().callbacks);
     },
     addMessageCallback(callback) {
         // console.log("add message callback", callback);
@@ -100,7 +101,7 @@ export const useWebSocketStore = create<NotificationWsStore>((set, get) => ({
                 messageCallback: [...state.callbacks.messageCallback, callback],
             },
         }));
-        console.log("current callbacks", get().callbacks);
+        // console.log("current callbacks", get().callbacks);
     },
     removeMessageCallback(callback) {
         // console.log("remove message callback", callback);

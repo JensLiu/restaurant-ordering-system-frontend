@@ -1,14 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import useAuthForm from "@/app/hooks/useAuthForm";
 import { Avatar, Button, Input, Modal } from "react-daisyui";
 import { FieldValues, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import useUserStore from "@/app/hooks/useUserStore";
 import { useRouter } from "next/navigation";
-import useStore from "@/app/hooks/useStore";
-
 type Variant = "LOGIN" | "REGISTER";
 
 const AuthForm = () => {

@@ -1,5 +1,6 @@
 import { MenuItem, MenuItemCategory } from "@/types/MenuTypes";
-import axiosInstance, { apiBaseUrl, axiosPublicInstance } from "./axios";
+import axiosInstance, { axiosPublicInstance } from "./axios";
+import { apiBaseUrl } from "./default"
 import { MenuItemFormValues } from "../admin/menu/hooks/MenuItemForm";
 import axios, { AxiosResponse } from "axios";
 

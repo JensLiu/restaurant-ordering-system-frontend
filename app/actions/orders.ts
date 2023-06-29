@@ -1,19 +1,22 @@
 import { Order } from "@/types/OrderTypes";
-import axiosInstance, { apiBaseUrl } from "./axios";
+import { apiBaseUrl, paymentSuccessUrl } from "./default";
+import axiosInstance from "./axios";
 
 export const checkOutById = async (
     id: string
 ): Promise<{ redirectUrl: string }> => {
     return (
         await axiosInstance.post(`/api/v1/checkout/${id}`, {
-            successUrl: `https://ordering.jensdevelops.de/me/orders`,
-            cancelUrl: `https://ordering.jensdevelops.de/me/orders`,
+            successUrl: paymentSuccessUrl,
+            cancelUrl: paymentSuccessUrl,
         })
     ).data;
 };
 
 export const getOrdersForCurrentUser = async (): Promise<Order[]> => {
-    return (await axiosInstance.get("/api/v1/me/orders")).data;
+    const response = await axiosInstance.get("/api/v1/me/orders");
+    console.log(response)
+    return response.data;
 };
 
 export const getChefOrders = async (): Promise<Order[]> => {

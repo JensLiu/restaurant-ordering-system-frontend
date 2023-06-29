@@ -4,6 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import UserMenu from "./UserMenu";
 import CartMenu from "./CartMenu";
 import useUserStore from "@/app/hooks/useUserStore";
+import { getHomeUrlByRole } from "@/app/actions/default";
 
 const Navbar = () => {
     const pathname = usePathname();
@@ -42,14 +43,14 @@ const Navbar = () => {
         <div className="navbar bg-base-100 sticky top-0 z-50 shadow-sm backdrop-filter backdrop-blur-lg bg-opacity-30">
             <div className="flex-1">
                 <a
-                    onClick={() => router.push("/")}
+                    onClick={() => router.push(getHomeUrlByRole(user.role))}
                     className="btn btn-ghost normal-case text-xl"
                 >
                     {greeting()}
                 </a>
             </div>
             <div className="flex-none">
-                <CartMenu />
+                {user.role == "CUSTOMER" && <CartMenu />}
                 <UserMenu />
             </div>
         </div>

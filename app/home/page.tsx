@@ -1,8 +1,8 @@
-import React, { use } from "react";
-import { getMenuItems, getMenuItemsServerSide } from "../actions/menu";
+import React from "react";
+import { getMenuItemsServerSide } from "../actions/menu";
 import ClientOnly from "../components/ClientOnly";
-import HomeClient from "./HomeClient";
 import MenuItemPreviewModal from "./components/MenuItemPreviewModal";
+import HomeClient from "./HomeClient";
 
 const HomePage = async () => {
 

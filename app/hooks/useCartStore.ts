@@ -6,7 +6,7 @@ import {
 } from "@/types/OrderTypes";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { paymentCancelUrl, paymentSuccessUrl } from "../actions/axios";
+import { paymentCancelUrl, paymentSuccessUrl } from "../actions/default";
 
 interface CartState {
     items: SelectedItem[];
@@ -112,7 +112,7 @@ const useCart = create<CartState>()(
         }),
         {
             name: "user-storage",
-            storage: createJSONStorage(() => sessionStorage),
+            storage: createJSONStorage(() => localStorage),
         }
     )
 );

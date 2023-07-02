@@ -6,11 +6,11 @@ export default function AdminLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="container flex">
+        <div className="flex container">
             <div className="">
                 <AdminSidebar />
             </div>
-            <div className="flex flex-grow">{children}</div>
+            <div className="flex-grow">{children}</div>
         </div>
     );
 }

@@ -63,7 +63,7 @@ const UserManagement = () => {
     }
 
     return (
-        <div className="container mx-auto border-solid border-4 border-sky-500">
+        <div className="container mx-auto py-6">
             <h1 className="text-3xl font-bold mb-4">Manage users</h1>
             <h1 className="text-md font-medium mb-4">Customers and chefs</h1>
             {tableContent}

@@ -59,7 +59,7 @@ const CategoryManagement: FC<CategoryManagementProps> = ({ categories }) => {
     };
 
     return (
-        <div className="container mx-auto py-6">
+        <div className="container min-w-full max-w-full min-h-full max-h-full mx-auto py-6">
             <h1 className="text-3xl font-bold mb-4">Manage catrgories</h1>
             <h1 className="text-md font-medium mb-4">Categories of food</h1>
             <div className="flex flex-col">

@@ -39,7 +39,7 @@ const ValuableCustomersChart = () => {
                     <tbody>
                         {data &&
                             data.map((item, index) => (
-                                <tr>
+                                <tr key={item.id}>
                                     <td>
                                         <div className="flex items-center space-x-3">
                                             <span>{index + 1}</span>

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useEffect, useState } from "react";
 
 import {
@@ -26,7 +27,7 @@ const options = {
 };
 
 const TrendingCategoryChart = () => {
-    const [data, setData] = useState<ChartData<'pie'>>();
+    const [data, setData] = useState<ChartData<"pie">>();
 
     const fetchData = async () => {
         const analysisData = (await getTrendingCategories()) as {

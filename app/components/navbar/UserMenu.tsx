@@ -38,15 +38,9 @@ const UserMenu = () => {
                         {role == "ADMIN" && (
                             <>
                                 <MenuItem
-                                    label="Users"
+                                    label="Dashboard"
                                     onClick={() => {
-                                        router.push("/admin/users");
-                                    }}
-                                />
-                                <MenuItem
-                                    label="Menu"
-                                    onClick={() => {
-                                        router.push("/admin/menu");
+                                        router.push("/admin/analysis");
                                     }}
                                 />
                             </>
@@ -56,6 +50,14 @@ const UserMenu = () => {
                                 label="Orders"
                                 onClick={() => {
                                     router.push("/me/orders");
+                                }}
+                            />
+                        )}
+                        {role == "CHEF" && (
+                            <MenuItem
+                                label="Workspace"
+                                onClick={() => {
+                                    router.push("/chef");
                                 }}
                             />
                         )}

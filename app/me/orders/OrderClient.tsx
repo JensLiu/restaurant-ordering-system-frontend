@@ -4,6 +4,7 @@ import OrderTableRow from "./components/OrderTableRow";
 import { Order } from "@/types/OrderTypes";
 import { useWebSocketStore } from "@/app/hooks/useWebSocketStore";
 import { getOrdersForCurrentUser } from "@/app/actions/orders";
+import { toast } from "react-hot-toast";
 
 const OrderClient = () => {
     const header = ["Id", "Overview", "Status", "Created At", "Actions"];
@@ -54,6 +55,9 @@ const OrderClient = () => {
                                     key={item.id}
                                     id={item.id}
                                     data={item}
+                                    onRefresh={() => {
+                                        fetchOrders();
+                                    }}
                                 />
                             ))}
                         </tbody>

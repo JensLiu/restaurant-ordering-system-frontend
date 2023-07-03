@@ -7,13 +7,14 @@ const AdminSidebar = () => {
     const pathname = usePathname();
 
     const selections = [
+        { name: "Analysis", path: "/admin/analysis" },
         { name: "Menu", path: "/admin/menu" },
         { name: "Categories", path: "/admin/categories" },
         { name: "Users", path: "/admin/users" },
     ];
 
     return (
-        <div className="flex flex-grow h-full overflow-hidden">
+        <div className="flex flex-col gap-3 mx-auto h-full overflow-hidden">
             <ul className="menu bg-base-100 w-56">
                 {selections.map((selection, index) => (
                     <li key={index}>

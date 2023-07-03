@@ -7,6 +7,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import useUserStore from "@/app/hooks/useUserStore";
 import { useRouter } from "next/navigation";
+import { getHomeUrlByRole } from "@/app/actions/default";
 type Variant = "LOGIN" | "REGISTER";
 
 const AuthForm = () => {
@@ -51,7 +52,6 @@ const AuthForm = () => {
                     if (success as boolean) {
                         toast.success("signed up");
                         setVariant("LOGIN");
-                        router.refresh();
                     }
                     setIsLoading(false);
                 }

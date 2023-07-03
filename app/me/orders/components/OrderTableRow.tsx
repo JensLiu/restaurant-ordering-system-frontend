@@ -1,15 +1,17 @@
-import { checkOutById } from "@/app/actions/orders";
+import { checkOutById, deleteOrderById } from "@/app/actions/orders";
 import { Order } from "@/types/OrderTypes";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import React, { FC } from "react";
+import { toast } from "react-hot-toast";
 
 interface OrderTableRowProprs {
     id: string;
     data: Order;
+    onRefresh: () => void;
 }
 
-const OrderTableRow: FC<OrderTableRowProprs> = ({ id, data }) => {
+const OrderTableRow: FC<OrderTableRowProprs> = ({ id, data, onRefresh }) => {
     const displayLength = data.items.length > 3 ? 3 + 1 : data.items.length;
     const imageGroup = (
         <div className="avatar-group -space-x-6">
@@ -27,10 +29,19 @@ const OrderTableRow: FC<OrderTableRowProprs> = ({ id, data }) => {
         .map((item) => item.menuItem.name)
         .join(", ")
         .concat(data.items.length > displayLength ? "..." : "");
+
     const router = useRouter();
+
     const handleContinueCheckout = () => {
         checkOutById(data.id).then((data) => {
             router.push(data.redirectUrl);
+        });
+    };
+
+    const handleDeleteOrder = () => {
+        deleteOrderById(data.id).then((data) => {
+            toast.success("Order deleted");
+            onRefresh();
         });
     };
 
@@ -71,6 +82,12 @@ const OrderTableRow: FC<OrderTableRowProprs> = ({ id, data }) => {
                                 className="btn btn-ghost btn-xs"
                             >
                                 continue
+                            </button>
+                            <button
+                                onClick={handleDeleteOrder}
+                                className="btn btn-ghost btn-xs"
+                            >
+                                delete
                             </button>
                         </span>
                     )}

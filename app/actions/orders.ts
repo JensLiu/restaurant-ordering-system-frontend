@@ -13,9 +13,13 @@ export const checkOutById = async (
     ).data;
 };
 
+export const deleteOrderById = async (id: string): Promise<void> => {
+    const response = await axiosInstance.delete(`/api/v1/me/orders/${id}`);
+    return response.data;
+}
+
 export const getOrdersForCurrentUser = async (): Promise<Order[]> => {
     const response = await axiosInstance.get("/api/v1/me/orders");
-    console.log(response)
     return response.data;
 };
 

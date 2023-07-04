@@ -7,8 +7,12 @@ import axios, { AxiosResponse } from "axios";
 // use public api to fetch at server side
 // only fetch api works at server side refreshing
 
-export const getMenuItems = async (): Promise<MenuItem[]> => {
+export const getPublicMenuItems = async (): Promise<MenuItem[]> => {
     return (await axiosPublicInstance.get("/api/v1/public/menu")).data;
+};
+
+export const getAllMenuItems = async (): Promise<MenuItem[]> => {
+    return (await axiosInstance.get("/api/v1/menu")).data;
 };
 
 export const getMenuItemsServerSide = async (): Promise<MenuItem[]> => {

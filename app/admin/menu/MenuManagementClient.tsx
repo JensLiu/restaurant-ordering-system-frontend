@@ -2,24 +2,27 @@
 import useMenuItemEditModal from "@/app/hooks/useMenuEditModal";
 import { MenuItem } from "@/types/MenuTypes";
 import { useRouter } from "next/navigation";
-import { FC, useEffect, useState } from "react";
 import MenuItemTableRow from "./components/MenuItemTableRow";
-import { getMenuItems } from "@/app/actions/menu";
+import { getAllMenuItems } from "@/app/actions/menu";
+import { useEffect, useState } from "react";
 
-interface MenuManagementClientProps {
-    menuItems: MenuItem[];
-}
-
-const MenuManagementClient: FC<MenuManagementClientProps> = ({ menuItems }) => {
+const MenuManagementClient = () => {
     const menuModal = useMenuItemEditModal();
-    const router = useRouter();
+    const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
     const header = ["Name", "Description", "Categories", "Actions"];
 
-    console.log("menuItems", menuItems);
+    const fetchData = async () => {
+        const data = await getAllMenuItems();
+        setMenuItems(data);
+    };
 
     const refreshData = () => {
-        router.refresh();
+        fetchData();
     };
+
+    useEffect(() => {
+        fetchData();
+    }, [])
 
     return (
         <div className="container mx-auto py-6">
@@ -46,9 +49,9 @@ const MenuManagementClient: FC<MenuManagementClientProps> = ({ menuItems }) => {
                                 key={item.id} // Add a key prop with a unique identifier
                                 id={item.id}
                                 data={item}
-                                onDelete={router.refresh}
-                                onEdit={router.refresh}
-                                onSoldOut={router.refresh}
+                                onDelete={refreshData}
+                                onEdit={refreshData}
+                                onSoldOut={refreshData}
                             />
                         ))}
                     </tbody>

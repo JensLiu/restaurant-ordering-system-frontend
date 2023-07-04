@@ -5,14 +5,11 @@ import ClientOnly from "@/app/components/ClientOnly";
 import { getMenuItemsServerSide } from "@/app/actions/menu";
 
 const MenuManagement = async () => {
-    const menuItems = await getMenuItemsServerSide();
     return (
-        <>
-            <ClientOnly>
-                <MenuEditModal />
-                <MenuManagementClient menuItems={menuItems} />
-            </ClientOnly>
-        </>
+        <ClientOnly>
+            <MenuEditModal />
+            <MenuManagementClient />
+        </ClientOnly>
     );
 };
 

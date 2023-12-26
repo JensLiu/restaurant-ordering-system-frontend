@@ -1,13 +1,14 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import {useCallback, useState} from "react";
 import useAuthForm from "@/app/hooks/useAuthForm";
-import { Avatar, Button, Input, Modal } from "react-daisyui";
-import { FieldValues, useForm } from "react-hook-form";
+import {Avatar, Button, Input, Modal} from "react-daisyui";
+import {FieldValues, useForm} from "react-hook-form";
 import toast from "react-hot-toast";
 import useUserStore from "@/app/hooks/useUserStore";
-import { useRouter } from "next/navigation";
-import { getHomeUrlByRole } from "@/app/actions/default";
+import {useRouter} from "next/navigation";
+import {getHomeUrlByRole} from "@/app/actions/default";
+
 type Variant = "LOGIN" | "REGISTER";
 
 const AuthForm = () => {
@@ -20,7 +21,7 @@ const AuthForm = () => {
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: {errors},
         reset,
     } = useForm<FieldValues>({
         defaultValues: {
@@ -35,10 +36,11 @@ const AuthForm = () => {
         setIsLoading(true);
         if (variant == "LOGIN") {
             userStore?.signIn(data.email, data.password, (success) => {
-                if (success as boolean) {
+                if (success) {
                     handleClose();
                     toast.success("logged in");
-                    router.refresh();
+                    let role = useUserStore.getState().role
+                    router.replace(getHomeUrlByRole(role))
                 }
                 setIsLoading(false);
             });
@@ -49,7 +51,7 @@ const AuthForm = () => {
                 data.firstname,
                 data.lastname,
                 (success) => {
-                    if (success as boolean) {
+                    if (success) {
                         toast.success("signed up");
                         setVariant("LOGIN");
                     }
@@ -88,7 +90,7 @@ const AuthForm = () => {
                         disabled={isLoading}
                         bordered
                         placeholder="First Name"
-                        {...register("firstname", { required: true })}
+                        {...register("firstname", {required: true})}
                         color={errors["firstname"] ? "error" : "primary"}
                     />
                     <Input
@@ -96,7 +98,7 @@ const AuthForm = () => {
                         disabled={isLoading}
                         bordered
                         placeholder="Last Name"
-                        {...register("lastname", { required: true })}
+                        {...register("lastname", {required: true})}
                         color={errors["lastname"] ? "error" : "primary"}
                     />
                 </>
@@ -108,7 +110,7 @@ const AuthForm = () => {
                 placeholder="Email"
                 disabled={isLoading}
                 bordered
-                {...register("email", { required: true })}
+                {...register("email", {required: true})}
                 color={errors["email"] ? "error" : "primary"}
             />
             <Input
@@ -117,7 +119,7 @@ const AuthForm = () => {
                 placeholder="Password"
                 disabled={isLoading}
                 bordered
-                {...register("password", { required: true })}
+                {...register("password", {required: true})}
                 color={errors["password"] ? "error" : "primary"}
             />
         </div>

@@ -1,4 +1,4 @@
-import { Role } from "@/types/UserTypes";
+import {Role} from "@/types/UserTypes";
 
 // with http(s)://
 export const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
@@ -22,6 +22,10 @@ export const getHomeUrlByRole = (role: Role) => {
             return "/chef";
         case "ADMIN":
             return "/admin";
+        case "INVALID":
+            return "/home";
+        default:
+            return "/home";
     }
 };
 

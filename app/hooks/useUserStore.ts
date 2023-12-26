@@ -24,14 +24,14 @@ interface UserState extends UserStateData {
     signIn: (
         email: string,
         password: string,
-        callback?: (message: any) => void
+        callback?: (success: boolean) => void
     ) => void;
     signUp: (
         email: string,
         password: string,
         firstname: string,
         lastname: string,
-        callback?: (message: any) => void
+        callback?: (success: boolean) => void
     ) => void;
     signOut: (callback?: (message: any) => void) => void;
     refreshData: () => void;
@@ -56,7 +56,7 @@ const wrapResponseDataAsState = (data: any) => {
 const defaultState = {
     email: "",
     id: "",
-    role: "CUSTOMER" as Role,
+    role: "INVALID" as Role,
     firstname: "",
     lastname: "",
     imageSrc: "",
@@ -86,7 +86,7 @@ const useUserStore = create<UserState>()(
                     lastname,
                 });
                 if (response) {
-                    set(wrapResponseDataAsState);
+                    set(wrapResponseDataAsState(response));
                     setCookies(roleCookieName, response.role);
                     callback && callback(true);
                     return;

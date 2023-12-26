@@ -1,8 +1,6 @@
-import ClientOnly from "./components/ClientOnly";
+import {redirect} from "next/navigation";
+import {getHomeUrlByRole} from "@/app/actions/default";
 
 export default async function Home() {
-    return (
-        <ClientOnly>
-        </ClientOnly>
-    );
+    redirect(getHomeUrlByRole("INVALID"))
 }

@@ -19,6 +19,8 @@ const MenuItemPreviewModal = () => {
     const handleClose = () => {
         previewModal.onClose();
         setQuantity(0);
+        setSelectedSize(undefined)
+        setSelectedFlavour(undefined)
     };
 
     const increment = () => {

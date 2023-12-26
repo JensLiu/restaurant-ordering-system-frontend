@@ -7,20 +7,6 @@ export async function middleware(req: NextRequest) {
     // get role in cookies (set by useUserStore)
     const role = req.cookies.get(roleCookieName)?.value as Role | undefined;
 
-    // redirect to home page of the user's role
-    if (req.url.match(/http[s]:\/\/[^/]+\/$/)) {
-        // <home> ::= https:// <baseUrl> / | http:// <baseUrl> /
-        // <baseUrl> ::= <anything but /> <baseUrl> | epsilon
-        if (role == "CUSTOMER") {
-            return NextResponse.redirect(new URL("/home", req.url));
-        } else if (role == "CHEF") {
-            return NextResponse.redirect(new URL("/chef", req.url));
-        } else if (role == "ADMIN") {
-            return NextResponse.redirect(new URL("/admin", req.url));
-        }
-        return NextResponse.redirect(new URL("/home", req.url));
-    }
-
     // redirect to home page if user is not authenticated or not in the right role
     if (req.url.includes("/admin") && role != "ADMIN") {
         return NextResponse.redirect(new URL("/", req.url));

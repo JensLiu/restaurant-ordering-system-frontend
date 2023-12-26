@@ -20,8 +20,7 @@ const MenuItemTableRow: FC<MenuItemTableRowProps> = ({
 }) => {
     const menuModal = useMenuItemEditModal();
     const handleEdit = () => {
-        menuModal.onOpen(data);
-        onEdit();
+        menuModal.onOpen(data, onEdit);
     };
     const handleDelete = () => {
         deleteMenuItem(id).then((res) => onDelete());

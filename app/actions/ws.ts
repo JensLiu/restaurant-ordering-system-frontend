@@ -1,9 +1,7 @@
-import { apiBaseDomainName } from "./default";
+import { wsApiBaseUrl } from "./default";
 
 export const getWebsocket = (token: string): WebSocket => {
-    const wsUrl = `ws${
-        process.env.NEXT_PUBLIC_ENVIRONMENT_NAME == "production" ? "s" : ""
-    }://${apiBaseDomainName}/ws/notifications/${token}`;
+    const wsUrl = `${wsApiBaseUrl}/ws/notifications/${token}`;
     
     console.log(wsUrl);
 

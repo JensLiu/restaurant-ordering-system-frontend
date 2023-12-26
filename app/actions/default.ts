@@ -1,22 +1,12 @@
 import { Role } from "@/types/UserTypes";
 
-export const apiBaseDomainName =
-    process.env.NEXT_PUBLIC_ENVIRONMENT_NAME == "production"
-        ? "necessary-soap-production.up.railway.app"
-        : "localhost:8080";
+// with http(s)://
+export const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
 
-export const websiteBaseDomainName =
-    process.env.NEXT_PUBLIC_ENVIRONMENT_NAME == "production"
-        ? "ordering.jensdevelops.de"
-        : "localhost:3000";
+// with ws(s)://
+export const wsApiBaseUrl = process.env.NEXT_PUBLIC_WS_API_BASE_URL
 
-export const websiteBaseUrl = `http${
-    process.env.NEXT_PUBLIC_ENVIRONMENT_NAME == "production" ? "s" : ""
-}://${websiteBaseDomainName}`;
-
-export const apiBaseUrl = `http${
-    process.env.NEXT_PUBLIC_ENVIRONMENT_NAME == "production" ? "s" : ""
-}://${apiBaseDomainName}`;
+export const websiteBaseUrl = process.env.NEXT_PUBLIC_WEBSITE_BASE_URL
 
 export const paymentSuccessUrl = `${websiteBaseUrl}/me/orders`;
 export const paymentCancelUrl = `${websiteBaseUrl}/me/orders`;

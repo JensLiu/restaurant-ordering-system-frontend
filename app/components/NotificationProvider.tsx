@@ -53,7 +53,7 @@ const messageCallback = (message: any) => {
 };
 
 const NotificationProvider: FC<NotificationProviderProps> = ({ children }) => {
-    const user = useUserStore.getState();
+    const user = useUserStore();
     const wsStore = useWebSocketStore();
 
     useEffect(() => {

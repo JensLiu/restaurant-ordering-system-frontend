@@ -27,7 +27,7 @@ const CartDrawer = () => {
     };
 
     const cartBody = (
-        <div className="px- py-6">
+        <div className="px-1 py-6">
             <div className="flex items-center justify-start mb-4">
                 <button
                     onClick={cartDrawer.onClose}
@@ -98,7 +98,7 @@ const CartDrawer = () => {
                     className="drawer-overlay"
                     onClick={cartDrawer.onClose}
                 ></label>
-                <ul className="menu p-4 w-80 h-full bg-base-200 text-base-content">
+                <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
                     {cartBody}
                 </ul>
             </div>

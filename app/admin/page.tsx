@@ -1,9 +1,9 @@
 import React from 'react'
+import {redirect} from "next/navigation";
+import {getHomeUrlByRole} from "@/app/actions/default";
 
 const AdminPage = () => {
-  return (
-    <div>Hello!</div>
-  )
+  redirect("/admin/analysis")
 }
 
 export default AdminPage

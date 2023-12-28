@@ -1,6 +1,8 @@
-import { create } from "zustand";
-import { getWebsocket, startHeartBeat } from "../actions/ws";
+import {create} from "zustand";
+import {getWebsocket, startHeartBeat} from "../actions/ws";
 import useUserStore from "./useUserStore";
+import {refreshToken} from "@/app/actions/axios";
+import {toast} from "react-hot-toast";
 
 export type Callbacks = {
     orderCallbacks: ((message: any) => void)[];
@@ -18,6 +20,8 @@ export interface NotificationWsStore {
     removeOrderCallback: (callback: (message: any) => void) => void;
     removeMessageCallback: (callback: (message: any) => void) => void;
 }
+
+const TokenExpiredErrorCode = 3000
 
 export const useWebSocketStore = create<NotificationWsStore>((set, get) => ({
     socket: undefined,
@@ -55,6 +59,9 @@ export const useWebSocketStore = create<NotificationWsStore>((set, get) => ({
 
         socket.onclose = (ev: CloseEvent) => {
             console.log(ev);
+            if (ev.code == TokenExpiredErrorCode) {
+                refreshToken();
+            }
         };
 
         socket.onerror = (ev: Event) => {
@@ -64,7 +71,7 @@ export const useWebSocketStore = create<NotificationWsStore>((set, get) => ({
         startHeartBeat(socket);
 
         // set socket
-        set({ socket });
+        set({socket});
     },
     close: () => {
         console.log("closing socket");
@@ -80,7 +87,7 @@ export const useWebSocketStore = create<NotificationWsStore>((set, get) => ({
         // console.log("add order callback", callback);
         set((state) => {
             if (state.callbacks.orderCallbacks.includes(callback))
-                return { ...state };
+                return {...state};
             return {
                 callbacks: {
                     ...state.callbacks,

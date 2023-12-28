@@ -45,9 +45,9 @@ export function handleResponseWrapper(response: AxiosResponse) {
  * credit: porone at stackoverflow
  *
  */
-const refreshToken = async (currentRefreshToken: string) => {
+export const refreshToken = async (): Promise<boolean> => {
     // console.log("refreshing token");
-    const response = await getRefreshedTokens(currentRefreshToken);
+    const response = await getRefreshedTokens(useUserStore.getState().refreshToken);
     if (response) {
         // set refreshed tokens
         useUserStore.setState((state) => ({
@@ -55,7 +55,9 @@ const refreshToken = async (currentRefreshToken: string) => {
             accessToken: response.accessToken,
             refreshToken: response.refreshToken,
         }));
+        return true
     }
+    return false
 };
 
 const handleError = async (error: any) => {
@@ -63,7 +65,7 @@ const handleError = async (error: any) => {
         if (!error.config._retry) {
             // console.log("refreshing token");
             error.config._retry = true;
-            await refreshToken(useUserStore.getState().refreshToken);
+            await refreshToken();
             return axiosInstance(error.config);
         }
         return Promise.reject(error);

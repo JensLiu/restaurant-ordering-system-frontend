@@ -1,6 +1,5 @@
 # Restaurant Ordering System Frontend
 
-
 💡 **Overview**
 
 **front-end repo**
@@ -10,13 +9,10 @@
 [https://github.com/JensLiu/restaurant-ordering-system-backend](https://github.com/JensLiu/restaurant-ordering-system-backend)
 
 **Project demo**
-[Restaurant Ordering System](https://ordering.jensdevelops.de)
+[https://ordering.jensdevelops.de](https://ordering.jensdevelops.de)
 
-
-⚠️ Do **NOT** enter your payment information, instead use the test card provided in the documentation
-
-TL; DR: Card No. 4242 4242 4242 4242
-[Document: Test payment methods](https://stripe.com/docs/testing)
+⚠️ Do **NOT** enter your payment information, instead use the test card provided in the documentation </br>
+TL; DR: Card No. 4242 4242 4242 4242 [Document: Test payment methods](https://stripe.com/docs/testing)
 
 👤 Accounts
 
@@ -25,8 +21,6 @@ TL; DR: Card No. 4242 4242 4242 4242
 - `manager@jensdevelops.de`
 
 Password: `password`
-
-
 
 **Use case**
 
@@ -38,36 +32,38 @@ Password: `password`
 
 # Frontend Tech Stack
 
-| Tech | Used in |
-| --- | --- |
-| Next.js | project framework |
-| Zustand | global status management |
-| React Hook Form | dynamic form |
-| React Hot Toast | toast |
-| Cookie-next | cookie access |
-| Next-Cloudinary | cloudinary image upload |
-| Tailwind CSS | CSS framework |
-| Clsx | dynamic CSS |
-| Daisy UI + React Daisy UI | CSS UI library |
-| React Icon | icon library |
+| Tech                      | Used in                  |
+|---------------------------|--------------------------|
+| Next.js                   | project framework        |
+| Zustand                   | global status management |
+| React Hook Form           | dynamic form             |
+| React Hot Toast           | toast                    |
+| Cookie-next               | cookie access            |
+| Next-Cloudinary           | cloudinary image upload  |
+| Tailwind CSS              | CSS framework            |
+| Clsx                      | dynamic CSS              |
+| Daisy UI + React Daisy UI | CSS UI library           |
+| React Icon                | icon library             |
 
 # Business Process
 
 - Customer & Chef
-[demo](https://youtu.be/-K2kpVm_Vvw)
+  [demo video](https://youtu.be/-K2kpVm_Vvw)
 
--  Customer: Continue unfinished Payment
-[demo](https://youtu.be/D_qsMaLWkkg)
+- Customer: Continue unfinished Payment
+  [demo video](https://youtu.be/D_qsMaLWkkg)
 
--  Manager: Menu Management (and constraints)
-[demo](https://youtu.be/DA6mWr74zDI)
+- Manager: Menu Management (and constraints)
+  [demo video](https://youtu.be/DA6mWr74zDI)
 
 # Deployment
+
 create a `.env` file in the root directory
+
 ```dotenv
 JWT_SECRET_KEY="your-secrete-key"
 NEXT_CLOUDINARY_UPLOAD_PRESET="your-cloudinary-upload-preset"
-#STRIPE_SECRET_KEY="your-stripe-secret-key"
+STRIPE_SECRET_KEY="your-stripe-secret-key"
 ACCESS_TOKEN_COOKIE_NAME=_app_access_token
 REFRESH_TOKEN_COOKIE_NAME=_app_refresh_token
 

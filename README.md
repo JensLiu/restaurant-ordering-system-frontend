@@ -52,6 +52,9 @@ Password: `password`
 - Customer: Continue unfinished Payment
   [demo video](https://youtu.be/D_qsMaLWkkg)
 
+- Manager: Add menu item
+  [demo video](https://youtu.be/Pf5HHALj_vA)
+
 - Manager: Menu Management (and constraints)
   [demo video](https://youtu.be/DA6mWr74zDI)
 

@@ -47,6 +47,22 @@ Password: `password`
 # Actors
 
 ## Customer
+### Register and Login
+- Customers can `login` by clicking the top-right avatar and select `login` </br>
+![Customer Login Menu](./doc/assets/customer/login_menu.png)
+
+- A `login`/`register` modal will pop up, fill the corresponding information </br>
+![Customer Login Modal](doc/assets/login_modal.png)
+![Customer Register Modal](./doc/assets/customer/register_modal.png)
+
+- After `login`, customers are able to access their `Orders` page and `Profile` page 
+by clicking the top-right avatar </br>
+![Customer User Menu](./doc/assets/customer/user_menu.png)
+
+### Profile Management
+*Changing of password is not implemented in the demo*
+![Customer User Profile](./doc/assets/user_profile.png)
+
 ### Menu Overview
 ![Customer Home](./doc/assets/customer/home.png)
 
@@ -66,6 +82,8 @@ Password: `password`
 ![Customer Orders](./doc/assets/customer/orders.png)
 
 ## Manager
+After login, managers can negate through their features by clicking the top-right avatar </br>
+![Manager User Menu](./doc/assets/manager/user_menu.png)
 ### Dashboard
 ![Manager Dashboard](./doc/assets/manager/dashboard.png)
 
@@ -84,6 +102,8 @@ Password: `password`
 ![Manager User Management](./doc/assets/manager/user_management.png)
 
 ## Chef
+After login, chefs can navigate through their features by clicking the top-right avatar </br>
+![Chef User Menu](./doc/assets/chef/user_menu.png)
 ### Workspace
 - The workspace automatically refreshes when a new order is paid
 - Chef workflow: Select a waiting order -> `Accept` the order -> `Complete` the order

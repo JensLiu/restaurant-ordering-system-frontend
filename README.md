@@ -15,18 +15,17 @@
 TL; DR: Card No. 4242 4242 4242 4242 [Document: Test payment methods](https://stripe.com/docs/testing)
 
 👤 Accounts
-
 - `customer@jensdevelops.de`
 - `chef@jensdevelops.de`
 - `manager@jensdevelops.de`
 
 Password: `password`
 
-**Use case**
+## Use case
 
 ![use case](./doc/assets/use_case.svg)
 
-**CD/CI: Railway Architecture**
+## Deployment: Railway Architecture
 
 ![railway](./doc/assets/railway.png)
 
@@ -45,7 +44,54 @@ Password: `password`
 | Daisy UI + React Daisy UI | CSS UI library           |
 | React Icon                | icon library             |
 
-# Business Process
+# Actors
+
+## Customer
+### Menu Overview
+![Customer Home](./doc/assets/customer/home.png)
+
+### Item Selection
+![Customer Item Selection](./doc/assets/customer/selection.png)
+
+### Cart
+- On `Checkout`, the customer is redirected to the stripe payment page.
+- After the customer finished the payment, he/she is redirected to the `Orders` page
+
+![Customer Cart](./doc/assets/customer/cart.png)
+
+### Orders
+- Notifications are pushed when the chef `Accept`s or `Complete`s the order
+- The page is refreshed at the same time to reflect the change of `status`
+
+![Customer Orders](./doc/assets/customer/orders.png)
+
+## Manager
+### Dashboard
+![Manager Dashboard](./doc/assets/manager/dashboard.png)
+
+### Menu Management
+- Menu Dashboard
+![Manager Menu Management](./doc/assets/manager/menu_management.png)
+- Menu Item Edit 
+![Manager Menu Item Management](./doc/assets/manager/menu_item_management.png)
+
+### Category Management
+![Manager Category Management](./doc/assets/manager/category_management.png)
+
+### User Management
+*User editing and deletion are not implemented in the demo.* </br>
+*The manager can only delete/fire chefs, they cannot delete any customers or their fellow managers.*
+![Manager User Management](./doc/assets/manager/user_management.png)
+
+## Chef
+### Workspace
+- The workspace automatically refreshes when a new order is paid
+- Chef workflow: Select a waiting order -> `Accept` the order -> `Complete` the order
+- When chef `Accept`s or `Completes`s an order, the customer will receive a notification
+
+![Chef Workspace](./doc/assets/chef/workspace.png)
+
+# Business Process Demo
 
 - Customer & Chef
   [demo video](https://youtu.be/-K2kpVm_Vvw)

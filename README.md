@@ -44,6 +44,17 @@ Password: `password`
 | Daisy UI + React Daisy UI | CSS UI library           |
 | React Icon                | icon library             |
 
+# Business Process Demo
+
+- Customer & Chef
+  [demo video](https://youtu.be/-K2kpVm_Vvw)
+
+- Customer: Continue unfinished Payment
+  [demo video](https://youtu.be/D_qsMaLWkkg)
+
+- Manager: Menu Management (and constraints)
+  [demo video](https://youtu.be/DA6mWr74zDI)
+
 # Actors
 
 ## Customer
@@ -110,17 +121,6 @@ After login, chefs can navigate through their features by clicking the top-right
 - When chef `Accept`s or `Completes`s an order, the customer will receive a notification
 
 ![Chef Workspace](./doc/assets/chef/workspace.png)
-
-# Business Process Demo
-
-- Customer & Chef
-  [demo video](https://youtu.be/-K2kpVm_Vvw)
-
-- Customer: Continue unfinished Payment
-  [demo video](https://youtu.be/D_qsMaLWkkg)
-
-- Manager: Menu Management (and constraints)
-  [demo video](https://youtu.be/DA6mWr74zDI)
 
 # Deployment
 
